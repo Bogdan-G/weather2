@@ -161,7 +161,7 @@ public class StormObject {
 	public TornadoHelper tornadoHelper = new TornadoHelper(this);
 	
 	public Set<ChunkCoordIntPair> doneChunks = new HashSet<ChunkCoordIntPair>();
-	public int updateLCG = (new Random()).nextInt();
+	public int updateLCG = (new org.bogdang.modifications.random.XSTR()).nextInt();
     
     public float formingStrength = 0; //for transition from 0 (in clouds) to 1 (touch down)
     
@@ -544,12 +544,12 @@ public class StormObject {
 			finalSpeed = 0.3F;
 		}
 		
-		if (manager.getWorld().getTotalWorldTime() % 100 == 0 && levelCurIntensityStage >= STATE_FORMING) {
+		/*if (manager.getWorld().getTotalWorldTime() % 100 == 0 && levelCurIntensityStage >= STATE_FORMING) {
 			
 			//finalSpeed = 0.5F;
 			
 			//Weather.dbg("storm ID: " + this.ID + ", stage: " + levelCurIntensityStage + ", storm speed: " + finalSpeed);
-		}
+		}*/
 		
 		
 		motion.xCoord = vecX * finalSpeed;
@@ -569,7 +569,7 @@ public class StormObject {
 	}
 	
 	public void tickWeatherEvents() {
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		World world = manager.getWorld();
 		
 		currentTopYBlock = world.getHeightValue(MathHelper.floor_double(pos.xCoord), MathHelper.floor_double(pos.zCoord));
@@ -923,7 +923,7 @@ public class StormObject {
 			
 			boolean performBuildup = false;
 			
-			Random rand = new Random();
+			Random rand = new org.bogdang.modifications.random.XSTR();
 			
 			if (!isPrecipitating() && rand.nextInt(randomChanceOfWaterBuildFromNothing) == 0) {
 				performBuildup = true;
@@ -1277,7 +1277,7 @@ public class StormObject {
 		}
 		
 		if (entP != null) {
-			Random rand = new Random();
+			Random rand = new org.bogdang.modifications.random.XSTR();
 			double var11 = entP.posX - pos.xCoord;
             double var15 = entP.posZ - pos.zCoord;
             float yaw = -(float)(Math.atan2(var11, var15) * 180.0D / Math.PI);
@@ -1417,7 +1417,7 @@ public class StormObject {
 		
 		//Weather.dbg("size: " + size + " - delay: " + delay); 
 		
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		Vec3 playerAdjPos = Vec3.createVectorHelper(entP.posX, pos.yCoord, entP.posZ);
 		double maxSpawnDistFromPlayer = 512;
@@ -1434,7 +1434,7 @@ public class StormObject {
 					
 					//Weather.dbg("listParticlesCloud.size(): " + listParticlesCloud.size());
 					
-					Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad), layers.get(layer), pos.zCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad));
+					Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad), layers.get(layer), pos.zCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad));
 					if (tryPos.distanceTo(playerAdjPos) < maxSpawnDistFromPlayer) {
 						EntityRotFX particle = spawnFogParticle(tryPos.xCoord, tryPos.yCoord, tryPos.zCoord, 2);
 						
@@ -1464,7 +1464,7 @@ public class StormObject {
 					
 					//Weather.dbg("listParticlesCloud.size(): " + listParticlesCloud.size());
 					
-					Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad), posGround.yCoord, pos.zCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad));
+					Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad), posGround.yCoord, pos.zCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad));
 					if (tryPos.distanceTo(playerAdjPos) < maxSpawnDistFromPlayer) {
 						int groundY = manager.getWorld().getHeightValue((int)tryPos.xCoord, (int)tryPos.zCoord);
 						EntityRotFX particle = spawnFogParticle(tryPos.xCoord, groundY + 3, tryPos.zCoord, 2);
@@ -1534,7 +1534,7 @@ public class StormObject {
 					if (listParticlesFunnel.size() < sizeMaxFunnelParticles) {
 						
 						
-						Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad), pos.yCoord, pos.zCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad));
+						Vec3 tryPos = Vec3.createVectorHelper(pos.xCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad), pos.yCoord, pos.zCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad));
 						//int y = entP.worldObj.getPrecipitationHeight((int)tryPos.xCoord, (int)tryPos.zCoord);
 						
 						if (tryPos.distanceTo(playerAdjPos) < maxSpawnDistFromPlayer) {
@@ -1627,7 +1627,7 @@ public class StormObject {
 		        
 				
 				if (isSpinning()) {
-					double speed = spinSpeed + (rand.nextDouble() * 0.01D);
+					double speed = spinSpeed + (rand.nextFloat() * 0.01D);
 					double distt = size;//300D;
 					
 					
@@ -1768,7 +1768,7 @@ public class StormObject {
 			} else {
 				double curSpeed = Math.sqrt(ent.motionX * ent.motionX + ent.motionY * ent.motionY + ent.motionZ * ent.motionZ);
 			
-				double speed = Math.max(0.2F, 5F * spinSpeed) + (rand.nextDouble() * 0.01D);
+				double speed = Math.max(0.2F, 5F * spinSpeed) + (rand.nextFloat() * 0.01D);
 				double distt = size;//300D;
 				
 				
@@ -1843,7 +1843,7 @@ public class StormObject {
 		StormObject entity = this;
 		WeatherEntityConfig conf = getWeatherEntityConfigForStorm();//WeatherTypes.weatherEntTypes.get(curWeatherType);
 		
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
     	/*if (entity instanceof EntTornado) {
     		entT = (EntTornado) entity;
@@ -1896,10 +1896,10 @@ public class StormObject {
         float pullY = 0.0F;
 
         //some random y pull
-        if (rand.nextInt(5) != 0)
+        /*if (rand.nextInt(5) != 0)
         {
             //pullY = 0.035F;
-        }
+        }*/
 
         if (distXZ > 5D)
         {
@@ -2000,7 +2000,9 @@ public class StormObject {
         	}
         }*/
         
-        if (entT != null) {
+        boolean entT_b = false;
+        if (entT != null) entT_b = true;
+        if (entT_b) {
         	
         	if (entT.scale != 1F) f1 += 20 - (20 * entT.scale);
         }
@@ -2009,7 +2011,7 @@ public class StormObject {
         float f4 = (float)Math.sin(-f1 * 0.01745329F - (float)Math.PI);
         float f5 = conf.tornadoPullRate * 1;
         
-        if (entT != null) {
+        if (entT_b) {
         	if (entT.scale != 1F) f5 *= entT.scale * 1.2F;
         }
 
@@ -2053,7 +2055,7 @@ public class StormObject {
 
         pullY *= str / 100F;
         
-        if (entT != null) {
+        if (entT_b) {
         	if (entT.scale != 1F) {
         		pullY *= entT.scale * 1.0F;
         		pullY += 0.002F;
@@ -2088,8 +2090,8 @@ public class StormObject {
 	@SideOnly(Side.CLIENT)
     public EntityRotFX spawnFogParticle(double x, double y, double z, int parRenderOrder) {
     	double speed = 0D;
-		Random rand = new Random();
-    	EntityRotFX entityfx = particleBehaviorFog.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, (rand.nextDouble() - rand.nextDouble()) * speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, (rand.nextDouble() - rand.nextDouble()) * speed, parRenderOrder);
+		Random rand = new org.bogdang.modifications.random.XSTR();
+    	EntityRotFX entityfx = particleBehaviorFog.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, /*(rand.nextFloat() - rand.nextFloat()) * */speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, /*(rand.nextFloat() - rand.nextFloat()) * */speed, parRenderOrder);
 		particleBehaviorFog.initParticle(entityfx);
 		
 		//lock y
@@ -2100,11 +2102,11 @@ public class StormObject {
     	
     	boolean debug = false;
     	
-    	if (debug) {
+    	/*if (debug) {
     		//entityfx.setMaxAge(50 + rand.nextInt(10));
     	} else {
 	    	
-    	}
+    	}*/
     	
     	if (levelCurIntensityStage == STATE_NORMAL) {
     		entityfx.setMaxAge(300 + rand.nextInt(100));

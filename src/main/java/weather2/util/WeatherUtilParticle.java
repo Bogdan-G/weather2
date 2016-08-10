@@ -25,7 +25,7 @@ public class WeatherUtilParticle {
     /*public static int effSandID = 4;
     public static int effWind2ID = 2;*/
     
-    public static Random rand = new Random();
+    public static Random rand = new org.bogdang.modifications.random.XSTR();
     
     public static Vec3[] rainPositions;
     public static int maxRainDrops = 80;
@@ -106,12 +106,12 @@ public class WeatherUtilParticle {
             return 1.4F + ((float)entity1.getAge() / 200);
         }*/
 
-        if (entity1 instanceof EntityFX)
-        {
+        //if (entity1 instanceof EntityFX)
+        //{
             return 5.0F + ((float)entity1.getAge() / 200);
-        }
+        //}
 
-        return -1;
+        //return -1;
     }
     
     /*@SideOnly(Side.CLIENT)

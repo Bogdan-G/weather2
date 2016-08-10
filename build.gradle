@@ -21,6 +21,9 @@ version = "2.3.10"
 group= "weather2" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "weather2-1.7.10"
 
+sourceCompatibility = 7
+targetCompatibility = 7
+
 minecraft {
     version = "1.7.10-10.13.0.1180"
     assetDir = "eclipse/assets"
@@ -39,7 +42,7 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-	compile files("../forge-1.7.10-CoroUtil/build/classes/main/")
+	//compile files("../cu_cls/main/")
 }
 
 processResources
@@ -60,4 +63,22 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+task devJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+    manifest {
+        //attributes 'FMLCorePlugin': 'WhateverLoaderClass'
+        //attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
+artifacts {
+    archives devJar
 }

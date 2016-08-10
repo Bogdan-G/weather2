@@ -87,7 +87,7 @@ public class TileEntityWeatherMachine extends TileEntity
     					so.initFirstTime();
     					so.pos = Vec3.createVectorHelper(xCoord, StormObject.layers.get(0), zCoord);
     					so.layer = 0;
-    					so.userSpawnedFor = "" + xCoord + yCoord + zCoord;
+    					so.userSpawnedFor = String.valueOf(new StringBuilder().append(xCoord).append(yCoord).append(zCoord));
     					//so.canSnowFromCloudTemperature = true;
     					so.naturallySpawned = false;
     					
@@ -101,7 +101,7 @@ public class TileEntityWeatherMachine extends TileEntity
     		
     		if (lastTickStormObject != null && !lastTickStormObject.isDead) {
     			
-    			Random rand = new Random();
+    			Random rand = new org.bogdang.modifications.random.XSTR();
     			
     			if (lockStormHere) {
 					//lastTickStormObject.pos = Vec3.createVectorHelper(xCoord + rand.nextFloat() - rand.nextFloat(), StormObject.layers.get(0), zCoord + rand.nextFloat() - rand.nextFloat());

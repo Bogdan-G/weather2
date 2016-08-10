@@ -143,7 +143,7 @@ public class SceneEnhancer implements Runnable {
 	            int curY = (int)player.posY;
 	            int curZ = (int)player.posZ;
 	            
-	            Random rand = new Random();
+	            Random rand = new org.bogdang.modifications.random.XSTR();
 	            
 	            //trim out distant sound locations, also update last time played
 	            for (int i = 0; i < soundLocations.size(); i++) {
@@ -224,7 +224,7 @@ public class SceneEnhancer implements Runnable {
     	World worldRef = mc.theWorld;
     	EntityPlayer player = mc.thePlayer;
     	
-    	Random rand = new Random();
+    	Random rand = new org.bogdang.modifications.random.XSTR();
     	
     	if (lastTickAmbientThreaded < System.currentTimeMillis()) {
     		lastTickAmbientThreaded = System.currentTimeMillis() + 500;
@@ -425,16 +425,16 @@ public class SceneEnhancer implements Runnable {
 		
 		storm = ClientTickHandler.weatherManager.getClosestStorm(plPos, maxStormDist, StormObject.STATE_FORMING, true);
 		
-		if (forOvercast) {
+		//if (forOvercast) {
 			//storm = ClientTickHandler.weatherManager.getClosestStorm(plPos, maxStormDist, StormObject.STATE_THUNDER, true);
-		} else {
+		//} else {
 			//storm = ClientTickHandler.weatherManager.getClosestStorm(plPos, maxStormDist, StormObject.STATE_FORMING, true);
 			
 			/*if (storm != null) {
 				System.out.println("storm found? " + storm);
 				System.out.println("storm water: " + storm.levelWater);
 			}*/
-		}
+		//}
 		
 	    
 	    
@@ -578,9 +578,9 @@ public class SceneEnhancer implements Runnable {
 	
 	public synchronized void tryParticleSpawning()
     {
-    	if (spawnQueue.size() > 0) {
+    	/*if (spawnQueue.size() > 0) {
     		//System.out.println("spawnQueue.size(): " + spawnQueue.size());
-    	}
+    	}*/
     	
     	try {
 	        for (int i = 0; i < spawnQueue.size(); i++)
@@ -643,7 +643,7 @@ public class SceneEnhancer implements Runnable {
 
         threadLastWorldTickTime = worldRef.getWorldTime();
         
-        Random rand = new Random();
+        Random rand = new org.bogdang.modifications.random.XSTR();
         
         //mining a tree causes leaves to fall
         int size = 40;
@@ -663,10 +663,10 @@ public class SceneEnhancer implements Runnable {
 
         		var5 = (Float)OldUtil.getPrivateValueSRGMCP(PlayerControllerMP.class, (PlayerControllerMP)mc.playerController, OldUtil.refl_curBlockDamageMP_obf, OldUtil.refl_curBlockDamageMP_mcp);
 
-                if (var5 > 0) {
+                /*if (var5 > 0) {
                 	//weather2 disabled for now
                 	//shakeTrees(8);
-                }
+                }*/
         	}
         }
 
@@ -857,7 +857,7 @@ public class SceneEnhancer implements Runnable {
                             	if (worldRef.rand.nextInt(Math.max(1, (spawnRate / 100))) == 0) {
                             		double speed = 0.15D;
                             		//System.out.println("xx:" + xx);
-                                	EntityRotFX entityfx = pm.spawnNewParticleIconFX(worldRef, ParticleRegistry.smoke, xx + rand.nextDouble(), yy + 0.2D + rand.nextDouble() * 0.2D, zz + rand.nextDouble(), (rand.nextDouble() - rand.nextDouble()) * speed, 0.03D, (rand.nextDouble() - rand.nextDouble()) * speed);//pm.spawnNewParticleWindFX(worldRef, ParticleRegistry.smoke, xx + rand.nextDouble(), yy + 0.2D + rand.nextDouble() * 0.2D, zz + rand.nextDouble(), (rand.nextDouble() - rand.nextDouble()) * speed, 0.03D, (rand.nextDouble() - rand.nextDouble()) * speed);
+                                	EntityRotFX entityfx = pm.spawnNewParticleIconFX(worldRef, ParticleRegistry.smoke, (double)xx + rand.nextFloat(), yy + 0.2D + rand.nextFloat() * 0.2D, (double)zz + rand.nextFloat(), (rand.nextFloat() - rand.nextFloat()) * speed, 0.03D, (rand.nextFloat() - rand.nextFloat()) * speed);//pm.spawnNewParticleWindFX(worldRef, ParticleRegistry.smoke, xx + rand.nextDouble(), yy + 0.2D + rand.nextDouble() * 0.2D, zz + rand.nextDouble(), (rand.nextDouble() - rand.nextDouble()) * speed, 0.03D, (rand.nextDouble() - rand.nextDouble()) * speed);
                                 	ParticleBehaviors.setParticleRandoms(entityfx, true, true);
                                 	ParticleBehaviors.setParticleFire(entityfx);
                                 	entityfx.setMaxAge(100+rand.nextInt(300));
@@ -1002,7 +1002,7 @@ public class SceneEnhancer implements Runnable {
 
         //System.out.println("stuff: " + side);
         
-        Random rand = new Random();
+        Random rand = new org.bogdang.modifications.random.XSTR();
         
         int handleCount = 0;
         
@@ -1027,10 +1027,10 @@ public class SceneEnhancer implements Runnable {
                     	
                     	
                     	
-                        if (entity1 == null)
+                        /*if (entity1 == null)//rly? todo? okay
                         {
                             continue;
-                        }
+                        }*/
 
                         
                         
@@ -1057,7 +1057,7 @@ public class SceneEnhancer implements Runnable {
                             {
                                 if (entity1.motionX < 0.01F && entity1.motionZ < 0.01F)
                                 {
-                                    entity1.motionY += rand.nextDouble() * 0.02;
+                                    entity1.motionY += rand.nextFloat() * 0.02d;
                                 }
 
                                 //entity1.motionX += rand.nextDouble() * 0.03;
@@ -1129,12 +1129,12 @@ public class SceneEnhancer implements Runnable {
 	                        if (entity1.onGround)
 	                        {
 	                            //entity1.onGround = false;
-	                            entity1.motionY += rand.nextDouble() * entity1.motionX;
+	                            entity1.motionY += (double)rand.nextFloat() * entity1.motionX;
 	                        }
 	
 	                        if (entity1.motionX < 0.01F && entity1.motionZ < 0.01F)
 	                        {
-	                            entity1.motionY += rand.nextDouble() * 0.02;
+	                            entity1.motionY += rand.nextFloat() * 0.02d;
 	                        }
                         }
 

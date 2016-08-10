@@ -208,6 +208,7 @@ public class WeatherUtil {
         
         boolean dbgShow = false;
         String dbg = "block list: ";
+        StringBuilder dbgSB = new StringBuilder(dbg);
 
         //HashMap hashmap = null;
         //System.out.println("?!?!" + Block.blocksList.length);
@@ -219,7 +220,10 @@ public class WeatherUtil {
         	String tagName = (String) it.next();
         	
         	Block block = (Block) Block.blockRegistry.getObject(tagName);
-        	if (dbgShow) System.out.println("??? " + Block.blockRegistry.getNameForObject(block));
+        	if (dbgShow) {
+        	//System.out.println("??? " + Block.blockRegistry.getNameForObject(block));
+        	cpw.mods.fml.common.FMLLog.fine("??? %s", Block.blockRegistry.getNameForObject(block));
+        	}
         	
         	if (block != null)
             {
@@ -229,7 +233,7 @@ public class WeatherUtil {
                 {
                 	if (ConfigMisc.Storm_Tornado_GrabCond_List_PartialMatches) {
                 		if (tagName.contains(splEnts[j])) {
-                			dbg += Block.blockRegistry.getNameForObject(block) + ", ";
+                			dbgSB.append(Block.blockRegistry.getNameForObject(block)).append(", ");
                 			foundEnt = true;
                 			break;
                 		}
@@ -239,13 +243,14 @@ public class WeatherUtil {
 	                    if (blockEntry != null && block == blockEntry)
 	                    {
 	                        foundEnt = true;
-	                        dbg += Block.blockRegistry.getNameForObject(block) + ", ";
+	                        dbgSB.append(Block.blockRegistry.getNameForObject(block)).append(", ");
 	                        //blackList.append(s + " ");
 	                        //System.out.println("adding to list: " + blocks[j]);
 	                        break;
 	                    }
                 	}
                 }
+                dbg=String.valueOf(dbgSB);
 
                 blockIDToUseMapping.put(block, foundEnt);
                 
@@ -264,7 +269,8 @@ public class WeatherUtil {
         }
         
         if (dbgShow) {
-        	System.out.println(dbg);
+        	//System.out.println(dbg);
+        	cpw.mods.fml.common.FMLLog.fine("%s", dbg);
         }
     }
     

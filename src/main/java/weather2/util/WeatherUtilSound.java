@@ -45,7 +45,7 @@ public class WeatherUtilSound {
     //public static int soundID[] = new int[3];
     
     public static void init() {
-    	Random rand = new Random();
+    	Random rand = new org.bogdang.modifications.random.XSTR();
     	snd_dmg_close[0] = "destruction_0_";
         snd_dmg_close[1] = "destruction_1_";
         snd_dmg_close[2] = "destruction_2_";

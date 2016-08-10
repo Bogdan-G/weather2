@@ -68,7 +68,7 @@ public class WindManager {
 	public WindManager(WeatherManagerBase parManager) {
 		manager = parManager;
 		
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		windAngleGlobal = rand.nextInt(360);
 	}
@@ -143,7 +143,7 @@ public class WindManager {
 	
 	public void tick() {
 		
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		//debug
 		//Weather.dbg("wind angle: " + windAngleGlobal);
@@ -173,7 +173,7 @@ public class WindManager {
 				if (lowWindTimer <= 0) {
 					if (windSpeedGlobalRandChangeTimer-- <= 0)
 		            {
-						windSpeedGlobal += (rand.nextDouble() * windSpeedGlobalChangeRate) - (windSpeedGlobalChangeRate / 2);
+						windSpeedGlobal += (rand.nextFloat() * windSpeedGlobalChangeRate) - (windSpeedGlobalChangeRate / 2);
 						windSpeedGlobalRandChangeTimer = windSpeedGlobalRandChangeDelay;
 		            }
 					if (ConfigMisc.Wind_NoWindEvents) {
@@ -249,7 +249,7 @@ public class WindManager {
 	            }
 	            
 				//global wind angle
-	            windAngleGlobal += ((new Random()).nextInt(5) - 2) * 0.5F;
+	            windAngleGlobal += ((new org.bogdang.modifications.random.XSTR()).nextInt(5) - 2) * 0.5F;
 				
 	            if (windAngleGlobal < -180)
 	            {

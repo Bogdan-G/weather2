@@ -3,6 +3,7 @@ package weather2.player;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -67,14 +68,15 @@ public class PlayerData {
 		
 		String fileURL = CoroUtilFile.getWorldSaveFolderPath() + CoroUtilFile.getWorldFolderName() + File.separator + "weather2" + File.separator + "PlayerData" + File.separator + username + ".dat";
 		
+		FileOutputStream fos = null;
 		try {
-			FileOutputStream fos = new FileOutputStream(fileURL);
+			fos = new FileOutputStream(fileURL);
 	    	CompressedStreamTools.writeCompressed(parData, fos);
 	    	fos.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Weather.dbg("Error writing Weather2 player data for " + username);
-		}
+		} finally {try {if (fos !=null) fos.close();} catch (IOException ex) {ex.printStackTrace();}}
 	}
 	
 }

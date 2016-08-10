@@ -31,7 +31,7 @@ public class RenderLightningBolt extends Render
 	        double[] adouble1 = new double[8];
 	        double d3 = 0.0D;
 	        double d4 = 0.0D;
-	        Random random = new Random(par1EntityLightningBolt.boltVertex);
+	        Random random = new org.bogdang.modifications.random.XSTR(par1EntityLightningBolt.boltVertex);
 	
 	        //Weather.dbg(par1EntityLightningBolt.posX + " - " + par1EntityLightningBolt.posY + " - " + par1EntityLightningBolt.posZ);
 	        //Weather.dbg("pos client: " + par2 + " - " + par4 + " - " + par6 + " - " + par8 + " - " + par9);
@@ -46,7 +46,7 @@ public class RenderLightningBolt extends Render
 	
 	        for (int j = 0; j < 4; ++j)
 	        {
-	            Random random1 = new Random(par1EntityLightningBolt.boltVertex);
+	            Random random1 = new org.bogdang.modifications.random.XSTR(par1EntityLightningBolt.boltVertex);
 	
 	            for (int k = 0; k < 3; ++k)
 	            {

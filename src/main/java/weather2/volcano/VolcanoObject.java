@@ -300,7 +300,7 @@ public class VolcanoObject {
 								
 								Block blockID = topBlockID;
 								
-								Random rand = new Random();
+								Random rand = new org.bogdang.modifications.random.XSTR();
 								
 								//some random chance of placing a block here
 								if (rand.nextInt(4) == 0) {
@@ -461,7 +461,7 @@ public class VolcanoObject {
 		
 		int delay = 1;
 		int loopSize = 1;
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		//temo
 		//if (state == 3 || state == 4) {
@@ -469,7 +469,7 @@ public class VolcanoObject {
 				for (int i = 0; i < loopSize; i++) {
 					if (listParticlesSmoke.size() < 500) {
 						double spawnRad = size/48;
-						EntityRotFX particle = spawnSmokeParticle(pos.xCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad), pos.yCoord + size + 2, pos.zCoord + (rand.nextDouble()*spawnRad) - (rand.nextDouble()*spawnRad));
+						EntityRotFX particle = spawnSmokeParticle(pos.xCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad), pos.yCoord + size + 2, pos.zCoord + (rand.nextFloat()*spawnRad) - (rand.nextFloat()*spawnRad));
 						listParticlesSmoke.add(particle);
 					}
 				}
@@ -490,7 +490,7 @@ public class VolcanoObject {
 				float posZ = (float) Math.cos(ent.entityId);
 				ent.setPosition(pos.xCoord + posX*radius, ent.posY, pos.zCoord + posZ*radius);*/
 		        
-				double speed = 0.4D + (rand.nextDouble() * 1D * 0.01D);
+				double speed = 0.4D + (rand.nextFloat() * 1D * 0.01D);
 				double distt = 300D;
 				double curDist = ent.getDistance(pos.xCoord, staticYPos, pos.zCoord);
 				
@@ -565,9 +565,9 @@ public class VolcanoObject {
 	
 	@SideOnly(Side.CLIENT)
     public EntityRotFX spawnSmokeParticle(double x, double y, double z) {
-    	double speed = 0D;
-		Random rand = new Random();
-    	EntityRotFX entityfx = particleBehaviors.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, (rand.nextDouble() - rand.nextDouble()) * speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, (rand.nextDouble() - rand.nextDouble()) * speed);
+    	double speed = 0D;//hmm 0.0
+		Random rand = new org.bogdang.modifications.random.XSTR();
+    	EntityRotFX entityfx = particleBehaviors.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, /*(rand.nextFloat() - rand.nextFloat()) * */speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, /*(rand.nextFloat() - rand.nextFloat()) * */speed);
     	particleBehaviors.initParticle(entityfx);
     	particleBehaviors.setParticleRandoms(entityfx, true, true);
     	particleBehaviors.setParticleFire(entityfx);

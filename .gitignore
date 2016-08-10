@@ -1,0 +1,10 @@
+.gradle/
+eclipse/
+Thumbs.db
+Desktop.ini
+dist
+build
+builds
+fb
+cu_cls
+libs

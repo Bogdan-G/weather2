@@ -67,9 +67,9 @@ public class WeatherManagerServer extends WeatherManagerBase {
 				}
 			//}
 			
-			if (world.getTotalWorldTime() % 400 == 0) {
+			/*if (world.getTotalWorldTime() % 400 == 0) {
 				//Weather.dbg("for dim: " + world.provider.dimensionId + " - is server dimension raining?: " + world.isRaining() + " time: " + world.getWorldInfo().getRainTime());
-			}
+			}*/
 			
 			//sync storms
 			
@@ -116,7 +116,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 					}
 				}
 
-				Random rand = new Random();
+				Random rand = new org.bogdang.modifications.random.XSTR();
 				
 				//cloud formation spawning - REFINE ME!
 				for (int i = 0; i < world.playerEntities.size(); i++) {
@@ -143,7 +143,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 	
 	public void trySpawnNearPlayerForLayer(EntityPlayer entP, int layer) {
 		
-		Random rand = new Random();
+		Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		int tryCountMax = 10;
 		int tryCountCur = 0;

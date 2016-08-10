@@ -282,13 +282,14 @@ public class WeatherManagerBase {
 		
 		String saveFolder = CoroUtilFile.getWorldSaveFolderPath() + CoroUtilFile.getWorldFolderName() + "weather2" + File.separator;
 		
+		FileOutputStream fos = null;
 		try {
 			//Write out to file
 			if (!(new File(saveFolder).exists())) (new File(saveFolder)).mkdirs();
-			FileOutputStream fos = new FileOutputStream(saveFolder + "WeatherData_" + dim + ".dat");
+			fos = new FileOutputStream(saveFolder + "WeatherData_" + dim + ".dat");
 	    	CompressedStreamTools.writeCompressed(mainNBT, fos);
 	    	fos.close();
-		} catch (Exception ex) { ex.printStackTrace(); }
+		} catch (Exception ex) { ex.printStackTrace(); } finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {ex.printStackTrace();}}
 	}
 	
 	public void readFromFile() {

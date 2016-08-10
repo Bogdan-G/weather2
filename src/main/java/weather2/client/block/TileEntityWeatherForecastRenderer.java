@@ -80,7 +80,7 @@ public class TileEntityWeatherForecastRenderer extends TileEntitySpecialRenderer
     		
     		Vec3 posXZ = Vec3.createVectorHelper(tEnt.xCoord, so.pos.yCoord, tEnt.zCoord);
     		
-    		descDist = "" + (int)posXZ.distanceTo(so.pos);
+    		descDist = String.valueOf((int)posXZ.distanceTo(so.pos));
     	}
     	
     	int index = 1;

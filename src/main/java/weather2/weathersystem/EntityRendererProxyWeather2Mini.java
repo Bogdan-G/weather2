@@ -19,7 +19,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 public class EntityRendererProxyWeather2Mini extends EntityRenderer
 {
     private Minecraft mc;
-    private Random random = new Random();
+    private Random random = new org.bogdang.modifications.random.XSTR();
     public int rendererUpdateCount;
     public long lastWorldTime = 0;
 

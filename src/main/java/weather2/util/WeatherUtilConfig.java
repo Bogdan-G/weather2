@@ -407,7 +407,7 @@ public class WeatherUtilConfig {
 			
 			//PROCESS ME ELSEWHERE!!! - must be done in EZGUI post receiving of this data because client still needs this server created dimension listing first
 			//nbtDim.setBoolean("effects", listDimensionsWindEffects.contains(dimID));
-			data.setTag("" + dimID, nbtDim);
+			data.setTag(String.valueOf(dimID), nbtDim);
 			///data.setString("" + worlds[i].provider.dimensionId, worlds[i].provider.getDimensionName());
 		}
 		
@@ -451,14 +451,15 @@ public class WeatherUtilConfig {
 			fileURL = CoroUtilFile.getMinecraftSaveFolderPath() + File.separator + "Weather2" + File.separator + "EZGUIConfigServerData.dat";
 		}
 		
+		FileOutputStream fos = null;
 		try {
-			FileOutputStream fos = new FileOutputStream(fileURL);
+			fos = new FileOutputStream(fileURL);
 	    	CompressedStreamTools.writeCompressed(parData, fos);
 	    	fos.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Weather.dbg("Error writing Weather2 EZ GUI data");
-		}
+		} finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {ex.printStackTrace();}}
 	}
 	
 	public static NBTTagCompound nbtReadNBTFromDisk(boolean loadForClient) {

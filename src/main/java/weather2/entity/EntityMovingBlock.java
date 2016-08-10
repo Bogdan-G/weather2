@@ -319,8 +319,8 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
                 {
                     if (var3.sideHit != 0 && !this.collideFalling)
                     {
-                        if (!this.collideFalling)
-                        {
+                        //if (!this.collideFalling)
+                        //{
                             this.collideFalling = true;
                             this.posX = MathHelper.floor_double(posX);
                             this.posZ = MathHelper.floor_double(posZ);
@@ -328,7 +328,7 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
                             this.setPosition(this.posX, this.posY, this.posZ);
                             this.motionX = 0.0D;
                             this.motionZ = 0.0D;
-                        }
+                        //}
                     }
                     else
                     {

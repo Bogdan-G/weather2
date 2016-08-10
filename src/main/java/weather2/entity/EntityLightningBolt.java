@@ -49,7 +49,7 @@ public class EntityLightningBolt extends EntityWeatherEffect
         this.boltVertex = this.rand.nextLong();
         this.boltLivingTime = this.rand.nextInt(3) + 1;
 
-        Random rand = new Random();
+        Random rand = new org.bogdang.modifications.random.XSTR();
         
         
         

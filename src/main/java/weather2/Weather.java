@@ -126,7 +126,8 @@ public class Weather {
 	
 	public static void dbg(Object obj) {
 		if (ConfigMisc.consoleDebug) {
-			System.out.println(obj);
+			//System.out.println(obj);
+			cpw.mods.fml.common.FMLLog.fine("%s", obj);
 		}
 	}
 

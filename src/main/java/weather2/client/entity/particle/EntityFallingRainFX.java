@@ -21,9 +21,9 @@ public class EntityFallingRainFX extends EntityRotFX implements WindHandler
     public EntityFallingRainFX(World var1, double var2, double var4, double var6, double var8, double var10, double var12, double var14, int colorIndex)
     {
         super(var1, var2, var4, var6, var8, var10, var12);
-        this.motionX = var8 + (double)((float)(Math.random() * 2.0D - 1.0D) * 0.05F);
-        this.motionY = var10 + (double)((float)(Math.random() * 2.0D - 1.0D) * 0.05F);
-        this.motionZ = var12 + (double)((float)(Math.random() * 2.0D - 1.0D) * 0.05F);
+        this.motionX = var8 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
+        this.motionY = var10 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
+        this.motionZ = var12 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
         //Color IDS
         //0 = black/regular/default
         //1 = dirt

@@ -230,7 +230,7 @@ public class GuiEZConfig extends GuiScreen {
 					}
 				}
 				
-				this.drawString(this.fontRendererObj, "" + (curDimListPage+1) + "/" + (listDimNames.size() / curDimListCountPerPage + 1), xStart+80, yStart2+194, 16777215);
+				this.drawString(this.fontRendererObj, (curDimListPage+1) + "/" + (listDimNames.size() / curDimListCountPerPage + 1), xStart+80, yStart2+194, 16777215);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -246,9 +246,9 @@ public class GuiEZConfig extends GuiScreen {
 	@Override
 	protected void keyTyped(char par1, int par2) {
 		
-		if (par2 == 1) {
+		/*if (par2 == 1) {
 			//we can check here if they hit esc to close gui, but i dont need it
-		}
+		}*/
 		
 		super.keyTyped(par1, par2);
 		
@@ -539,9 +539,9 @@ public class GuiEZConfig extends GuiScreen {
         	}
         }
         
-        if (guiCur.equals("main")) {
+        /*if (guiCur.equals("main")) {
 	        
-        }
+        }*/
         
         /*if (guiCur.equals("main")) {
 	        addButton(GUI_SUBGUI_WAVE, new GuiButton(CMD_SUBGUI_WAVE, xStartPadded, yStartPadded+btnHeightAndPadding*6, btnWidth, btnHeight, "Conf. Wave"));

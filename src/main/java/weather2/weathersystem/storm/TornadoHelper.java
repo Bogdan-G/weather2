@@ -94,7 +94,7 @@ public class TornadoHelper {
         
         forceRotate(parWorld);
         
-        Random rand = new Random();
+        Random rand = new org.bogdang.modifications.random.XSTR();
         
         //confirm this is correct, changing to formation use!
         //int spawnYOffset = (int) storm.currentTopYBlock;
@@ -347,14 +347,14 @@ public class TornadoHelper {
 	                    tickGrabCount++;
 	                    ripCount++;
 
-	                    if (ripCount % 10 == 0)
+	                    /*if (ripCount % 10 == 0)
 	                    {
 	                        //System.out.println(ripCount);
 	                    }
 	                    else
 	                    {
 	                        //System.out.print(ripCount + " - ");
-	                    }
+	                    }*/
 
 	                    //mBlock.controller = this;
 	                    mBlock.type = 0;
@@ -567,13 +567,13 @@ public class TornadoHelper {
 
         if (distToPlayer < close)
         {
-            if (!lastTickPlayerClose)
-            {
+            //if (!lastTickPlayerClose)
+            //{
                 /*this.soundTimer[0] = System.currentTimeMillis();
                 this.soundTimer[1] = System.currentTimeMillis();
                 tryPlaySound(snd_dmg_close, 0, mc.thePlayer, volScaleClose);
                 tryPlaySound(snd_wind_close, 1, mc.thePlayer, volScaleClose);*/
-            }
+            //}
 
             lastTickPlayerClose = true;
             //tryPlaySound(snd_dmg_close[0], 0);
@@ -633,7 +633,7 @@ public class TornadoHelper {
     {
         Entity soundTarget = source;
 
-        Random rand = new Random();
+        Random rand = new org.bogdang.modifications.random.XSTR();
         
         // should i?
         //soundTarget = this;
