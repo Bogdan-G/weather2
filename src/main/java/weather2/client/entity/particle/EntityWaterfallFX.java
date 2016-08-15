@@ -107,9 +107,9 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         this.prevPosZ = this.posZ;
         
         float adj = 0.08F * rand.nextFloat();
-        //this.motionX += adj * Math.sin(worldObj.getWorldTime());
-        //this.motionZ += adj * Math.sin(worldObj.getWorldTime());
-        //this.motionY += adj * Math.cos(worldObj.getWorldTime());
+        //this.motionX += adj * org.bogdang.modifications.math.MathHelperLite.sin(worldObj.getWorldTime());
+        //this.motionZ += adj * org.bogdang.modifications.math.MathHelperLite.sin(worldObj.getWorldTime());
+        //this.motionY += adj * org.bogdang.modifications.math.MathHelperLite.cos(worldObj.getWorldTime());
 
         if (particleRed < 255) particleRed += 0.01F;
         if (particleGreen < 255) particleGreen += 0.01F;
@@ -140,8 +140,8 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         		
         		float speed = 0.005F;
         		
-        		this.motionX -= Math.sin(dir) * speed;
-        		this.motionZ += Math.cos(dir) * speed;
+        		this.motionX -= org.bogdang.modifications.math.MathHelperLite.sin(dir) * speed;
+        		this.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(dir) * speed;
             }
         	
         	float range = 0.03F;

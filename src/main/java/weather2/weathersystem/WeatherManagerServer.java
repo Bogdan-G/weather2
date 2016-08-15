@@ -158,8 +158,8 @@ public class WeatherManagerServer extends WeatherManagerBase {
 		//use 256 or the cutoff val if its configured small
 		float windOffsetDist = Math.min(256, ConfigMisc.Misc_simBoxRadiusCutoff / 4 * 3);
 		double angle = windMan.getWindAngleForClouds();
-		double vecX = -Math.sin(Math.toRadians(angle)) * windOffsetDist;
-		double vecZ = Math.cos(Math.toRadians(angle)) * windOffsetDist;
+		double vecX = -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * windOffsetDist;
+		double vecZ = org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * windOffsetDist;
 		
 		while (tryCountCur++ == 0 || (tryCountCur < tryCountMax && (soClose != null || playerClose != null))) {
 			spawnX = (int) (entP.posX - vecX + rand.nextInt(ConfigMisc.Misc_simBoxRadiusSpawn) - rand.nextInt(ConfigMisc.Misc_simBoxRadiusSpawn));

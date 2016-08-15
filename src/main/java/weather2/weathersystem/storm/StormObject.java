@@ -517,8 +517,8 @@ public class StormObject {
 		
 		//Weather.dbg("cur angle: " + angle);
 		
-		double vecX = -Math.sin(Math.toRadians(angle));
-		double vecZ = Math.cos(Math.toRadians(angle));
+		double vecX = -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle));
+		double vecZ = org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle));
 		
 		float cloudSpeedAmp = 0.2F;
 		
@@ -1604,8 +1604,8 @@ public class StormObject {
 			} else {
 				//ent.posX = pos.xCoord + i*10;
 				/*float radius = 50 + (i/1F);
-				float posX = (float) Math.sin(ent.getEntityId());
-				float posZ = (float) Math.cos(ent.getEntityId());
+				float posX = (float) org.bogdang.modifications.math.MathHelperLite.sin(ent.getEntityId());
+				float posZ = (float) org.bogdang.modifications.math.MathHelperLite.cos(ent.getEntityId());
 				ent.setPosition(pos.xCoord + posX*radius, ent.posY, pos.zCoord + posZ*radius);*/
 		        
 				double curSpeed = Math.sqrt(ent.motionX * ent.motionX + ent.motionY * ent.motionY + ent.motionZ * ent.motionZ);
@@ -1706,8 +1706,8 @@ public class StormObject {
 			        
 			        
 			        if (curSpeed < speed * 20D) {
-			        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
-				        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
+			        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
+				        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
 			        }
 				} else {
 					float cloudMoveAmp = 0.2F * (1 + layer);
@@ -1721,8 +1721,8 @@ public class StormObject {
 			        }
 					
 					if (curSpeed < speed * 1D) {
-			        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
-				        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
+			        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
+				        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
 			        }
 				}
 		        
@@ -1797,8 +1797,8 @@ public class StormObject {
                 //ent.rotationPitch = 0;//-20F - (ent.getEntityId() % 10);
                 
                 if (curSpeed < speed * 20D) {
-		        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
-			        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
+		        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
+			        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
 		        }
 			}
 		}
@@ -1858,10 +1858,10 @@ public class StormObject {
         double d2 = entity.pos.zCoord - entity1.posZ;
         
         if (conf.type == conf.TYPE_SPOUT) {
-        	float range = 30F * (float) Math.sin((Math.toRadians(((entity1.worldObj.getTotalWorldTime() * 0.5F) + (ID * 50)) % 360)));
+        	float range = 30F * (float) org.bogdang.modifications.math.MathHelperLite.sin((Math.toRadians(((entity1.worldObj.getTotalWorldTime() * 0.5F) + (ID * 50)) % 360)));
         	float heightPercent = (float) (1F - ((entity1.posY - posGround.yCoord) / (pos.yCoord - posGround.yCoord)));
-        	float posOffsetX = (float) Math.sin((Math.toRadians(heightPercent * 360F)));
-        	float posOffsetZ = (float) -Math.cos((Math.toRadians(heightPercent * 360F)));
+        	float posOffsetX = (float) org.bogdang.modifications.math.MathHelperLite.sin((Math.toRadians(heightPercent * 360F)));
+        	float posOffsetZ = (float) -org.bogdang.modifications.math.MathHelperLite.cos((Math.toRadians(heightPercent * 360F)));
         	//Weather.dbg("posOffset: " + posOffset);
         	//d1 += 50F*heightPercent*posOffset;
         	d1 += range*posOffsetX;
@@ -2007,8 +2007,8 @@ public class StormObject {
         	if (entT.scale != 1F) f1 += 20 - (20 * entT.scale);
         }
         
-        float f3 = (float)Math.cos(-f1 * 0.01745329F - (float)Math.PI);
-        float f4 = (float)Math.sin(-f1 * 0.01745329F - (float)Math.PI);
+        float f3 = (float)org.bogdang.modifications.math.MathHelperLite.cos(-f1 * 0.01745329F - (float)Math.PI);
+        float f4 = (float)org.bogdang.modifications.math.MathHelperLite.sin(-f1 * 0.01745329F - (float)Math.PI);
         float f5 = conf.tornadoPullRate * 1;
         
         if (entT_b) {

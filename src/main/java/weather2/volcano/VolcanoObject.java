@@ -486,8 +486,8 @@ public class VolcanoObject {
 			} else {
 				//ent.posX = pos.xCoord + i*10;
 				/*float radius = 50 + (i/1F);
-				float posX = (float) Math.sin(ent.entityId);
-				float posZ = (float) Math.cos(ent.entityId);
+				float posX = (float) org.bogdang.modifications.math.MathHelperLite.sin(ent.entityId);
+				float posZ = (float) org.bogdang.modifications.math.MathHelperLite.cos(ent.entityId);
 				ent.setPosition(pos.xCoord + posX*radius, ent.posY, pos.zCoord + posZ*radius);*/
 		        
 				double speed = 0.4D + (rand.nextFloat() * 1D * 0.01D);
@@ -544,8 +544,8 @@ public class VolcanoObject {
 	        	}
 		        
 		        if (curSpeed < 3D) {
-		        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
-			        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
+		        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
+			        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
 		        }*/
 		        
 		        
