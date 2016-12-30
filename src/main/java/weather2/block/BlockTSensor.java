@@ -10,6 +10,7 @@ import weather2.weathersystem.storm.StormObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -89,6 +90,13 @@ public class BlockTSensor extends Block
     public boolean canProvidePower()
     {
         return true;
+    }
+    
+    @Override
+    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    {
+        p_149660_1_.scheduleBlockUpdateWithPriority(p_149660_2_, p_149660_3_, p_149660_4_, this, 10, 1);
+        return super.onBlockPlaced(p_149660_1_, p_149660_2_, p_149660_3_, p_149660_4_, p_149660_5_, p_149660_6_, p_149660_7_, p_149660_8_, p_149660_9_);
     }
     
     @Override

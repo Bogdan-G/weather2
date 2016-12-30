@@ -149,9 +149,12 @@ public class WeatherManagerBase {
 		World world = getWorld();
 		if (world != null) {
 			//tick storms
+			try {
 			for (int i = 0; i < getStormObjects().size(); i++) {
-				getStormObjects().get(i).tickRender(partialTick);
+				StormObject obj = getStormObjects().get(i);
+				if (obj!=null) obj.tickRender(partialTick);
 			}
+			} catch (Exception e) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);}
 		}
 	}
 	

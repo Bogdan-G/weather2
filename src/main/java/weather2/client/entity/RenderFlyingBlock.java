@@ -65,12 +65,14 @@ public class RenderFlyingBlock extends Render
         //tess.setColorOpaque_F(255, 255, 255);
         //renderBlock = Block.netherrack;
         if (var1 instanceof EntityMovingBlock) {
+        	try {
         	Block dynamicRenderBlock = ((EntityMovingBlock) var1).tile;
         	GL11.glRotatef((float)(age * 0.1F * 180.0D / 12.566370964050293D - 0.0D), 1.0F, 0.0F, 0.0F);
             GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 1.0F, 0.0F);
             GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 0.0F, 1.0F);
         	rb.setRenderBoundsFromBlock(dynamicRenderBlock);
 	        rb.renderBlockAsItem(dynamicRenderBlock, 0, 0.8F);
+	        } catch (Exception e) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);}
         } else {
         	//the real one
 	        rb.setRenderBoundsFromBlock(renderBlock);
