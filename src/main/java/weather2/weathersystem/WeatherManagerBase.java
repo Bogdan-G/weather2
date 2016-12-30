@@ -226,10 +226,11 @@ public class WeatherManagerBase {
 		
 		StormObject closestStorm = null;
 		double closestDist = 9999999;
+		List<StormObject> listStorms = getStormObjects();
 		
-		for (int i = 0; i < getStormObjects().size(); i++) {
-			StormObject storm = getStormObjects().get(i);
-			if (storm.isDead) continue;
+		for (int i = 0; i < listStorms.size(); i++) {
+			StormObject storm = listStorms.get(i);
+			if (storm == null || storm.isDead) continue;
 			double dist = storm.pos.distanceTo(parPos);
 			/*if (getWorld().isRemote) {
 				System.out.println("close storm candidate: " + dist + " - " + storm.state + " - " + storm.attrib_rain);
