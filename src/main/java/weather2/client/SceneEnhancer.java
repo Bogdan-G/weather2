@@ -423,6 +423,8 @@ public class SceneEnhancer implements Runnable {
 		
 		ClientTickHandler.checkClientWeather();
 		
+		if (ClientTickHandler.weatherManager == null) return 0;
+		
 		storm = ClientTickHandler.weatherManager.getClosestStorm(plPos, maxStormDist, StormObject.STATE_FORMING, true);
 		
 		//if (forOvercast) {
@@ -636,12 +638,12 @@ public class SceneEnhancer implements Runnable {
             return;
         }
 
-        if (threadLastWorldTickTime == worldRef.getWorldTime())
+        if (threadLastWorldTickTime == worldRef.getTotalWorldTime())
         {
             return;
         }
 
-        threadLastWorldTickTime = worldRef.getWorldTime();
+        threadLastWorldTickTime = worldRef.getTotalWorldTime();
         
         Random rand = new org.bogdang.modifications.random.XSTR();
         

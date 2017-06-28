@@ -91,8 +91,9 @@ public class EntityLightningBolt extends EntityWeatherEffect
         if (worldObj.isRemote) {
 	        if (this.lightningState == 2)
 	        {
-	            this.worldObj.playSound(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 64.0F, 0.8F + this.rand.nextFloat() * 0.2F, false);
-	            this.worldObj.playSound(this.posX, this.posY, this.posZ, "random.explode", 2.0F, 0.5F + this.rand.nextFloat() * 0.2F, false);
+	            //this.worldObj.playSound(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 64.0F, 0.8F + this.rand.nextFloat() * 0.2F, false);
+	            //this.worldObj.playSound(this.posX, this.posY, this.posZ, "random.explode", 2.0F, 0.5F + this.rand.nextFloat() * 0.2F, false);
+	            updateSoundEffect();
 	        }
         }
 
@@ -148,8 +149,17 @@ public class EntityLightningBolt extends EntityWeatherEffect
     public void updateFlashEffect() {
     	Minecraft mc = FMLClientHandler.instance().getClient();
     	//only flash sky if player is within 256 blocks of lightning
-    	if (mc.thePlayer != null && mc.thePlayer.getDistanceToEntity(this) < 256) {
+    	if (mc.thePlayer != null && mc.thePlayer.getDistanceToEntity(this) < ConfigMisc.Lightning_DistanceToPlayerForEffects) {
     		this.worldObj.lastLightningBolt = 2;
+    	}
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void updateSoundEffect() {
+    	Minecraft mc = FMLClientHandler.instance().getClient();
+    	if (mc.thePlayer != null && mc.thePlayer.getDistanceToEntity(this) < ConfigMisc.Lightning_DistanceToPlayerForEffects) {
+	            this.worldObj.playSound(this.posX, this.posY, this.posZ, "ambient.weather.thunder", 64.0F, 0.8F + this.rand.nextFloat() * 0.2F, false);
+	            this.worldObj.playSound(this.posX, this.posY, this.posZ, "random.explode", 2.0F, 0.5F + this.rand.nextFloat() * 0.2F, false);
     	}
     }
 

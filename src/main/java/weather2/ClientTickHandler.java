@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.EntityRenderer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 import org.lwjgl.input.Mouse;
@@ -122,7 +123,10 @@ public class ClientTickHandler
     			ClientTickHandler.init(FMLClientHandler.instance().getClient().theWorld);
         	}
     	} catch (Exception ex) {
-    		Weather.dbg("Warning, Weather2 client received packet before it was ready to use, and failed to init client weather due to null world");
+    		//System.out.println no print in log, go print in log
+    		Weather.dbg("Warning, Weather2 weatherManager init failed for some reason, printing stacktrace, report to https://github.com/Corosauce/weather2/issues");
+    		cpw.mods.fml.common.FMLLog.warning("Warning, Weather2 weatherManager init failed for some reason, printing stacktrace, report to https://github.com/Corosauce/weather2/issues");
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);
     	}
     }
     

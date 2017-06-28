@@ -21,11 +21,21 @@ import weather2.weathersystem.wind.WindManager;
 import CoroUtil.packet.PacketHelper;
 import CoroUtil.util.CoroUtilEntity;
 
+import java.util.*;
+
 public class WeatherManagerServer extends WeatherManagerBase {
 
 	//storm logic, syncing to client
 	
 	public int syncRange = 256;
+	
+	private int tickerSyncWeatherCheckVanilla = 0;
+	private int tickerSyncWeatherLowWind = 0;
+	private int tickerSyncWeatherHighWind = 0;
+	private int tickerSyncVolcanos = 0;
+	private int tickerSyncWindAndIMC = 0;
+	private int tickerSyncStormSpawnOrRemoveChecks = 0;
+
 
 	public WeatherManagerServer(int parDim) {
 		super(parDim);
@@ -40,6 +50,13 @@ public class WeatherManagerServer extends WeatherManagerBase {
 	public void tick() {
 		super.tick();
 		
+		tickerSyncWeatherCheckVanilla++;
+		tickerSyncWeatherLowWind++;
+		tickerSyncWeatherHighWind++;
+		tickerSyncVolcanos++;
+		tickerSyncWindAndIMC++;
+		tickerSyncStormSpawnOrRemoveChecks++;
+
 		World world = getWorld();
 		
 		//wrap back to ID 0 just in case someone manages to hit 9223372036854775807 O_o
@@ -61,7 +78,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 			}
 			
 			//if (ConfigMisc.overcastMode) {
-				if (world.getTotalWorldTime() % 400 == 0) {
+				if (tickerSyncWeatherCheckVanilla == ConfigMisc.tickerRateSyncWeatherCheckVanilla) {
 					isVanillaRainActiveOnServer = getWorld().isRaining();
 					syncWeatherVanilla();
 				}
@@ -75,36 +92,52 @@ public class WeatherManagerServer extends WeatherManagerBase {
 			
 			//System.out.println("getStormObjects().size(): " + getStormObjects().size());
 			
-			for (int i = 0; i < getStormObjects().size(); i++) {
-				StormObject so = getStormObjects().get(i);
-				if (world.getTotalWorldTime() % ((so.levelCurIntensityStage >= StormObject.STATE_HIGHWIND) ? 2 : 40) == 0) {
-					syncStormUpdate(so);
-				}
+			boolean shouldUpdateHighWind = false;
+			boolean shouldUpdateLowWind = false;
+			if (tickerSyncWeatherHighWind == ConfigMisc.tickerRateSyncWeatherHighWind) {
+				shouldUpdateHighWind = true;
+				tickerSyncWeatherHighWind = 0;
+			}
+			if (tickerSyncWeatherLowWind == ConfigMisc.tickerRateSyncWeatherLowWind) {
+				shouldUpdateLowWind = true;
+				tickerSyncWeatherLowWind = 0;
 			}
 			
+			if (shouldUpdateHighWind || shouldUpdateLowWind) {
+				Set<NBTTagCompound> stormObjectsData = new HashSet<NBTTagCompound>();
+				for (int i = 0; i < getStormObjects().size(); i++) {
+					StormObject so = getStormObjects().get(i);
+					if (so.levelCurIntensityStage >= StormObject.STATE_HIGHWIND) {
+						if (shouldUpdateHighWind)
+							stormObjectsData.add(so.nbtSyncForClient());
+							//syncStormUpdate(so);
+					} else if (shouldUpdateLowWind)
+						stormObjectsData.add(so.nbtSyncForClient());
+				}
+				if (stormObjectsData.size() > 0)
+					syncStormUpdate(stormObjectsData);
+			}
 			
 			//sync volcanos
-			if (world.getTotalWorldTime() % 40 == 0) {
+			if (tickerSyncVolcanos == ConfigMisc.tickerRateSyncVolcanos) {
 				for (int i = 0; i < getVolcanoObjects().size(); i++) {
 					syncVolcanoUpdate(getVolcanoObjects().get(i));
 				}
 			}
 			
-			//sync wind
-			if (world.getTotalWorldTime() % 60 == 0) {
+			//sync wind and IMC
+			if (tickerSyncWindAndIMC == ConfigMisc.tickerRateSyncWindAndIMC) {
 				syncWindUpdate(windMan);
-			}
-			
-			//IMC
-			if (world.getTotalWorldTime() % 60 == 0) {
 				nbtStormsForIMC();
+				tickerSyncWindAndIMC = 0;
 			}
 			
 			//temp
 			//getVolcanoObjects().clear();
 			
 			//sim box work
-			if (WeatherUtilConfig.listDimensionsClouds.contains(world.provider.dimensionId) && world.getTotalWorldTime() % 20 == 0) {
+			if (WeatherUtilConfig.listDimensionsClouds.contains(world.provider.dimensionId) && (tickerSyncStormSpawnOrRemoveChecks == ConfigMisc.tickerRateSyncStormSpawnOrRemoveChecks)) {
+				tickerSyncStormSpawnOrRemoveChecks = 0;
 				for (int i = 0; i < getStormObjects().size(); i++) {
 					StormObject so = getStormObjects().get(i);
 					EntityPlayer closestPlayer = world.getClosestPlayer(so.posGround.xCoord, so.posGround.yCoord, so.posGround.zCoord, ConfigMisc.Misc_simBoxRadiusCutoff);
@@ -260,12 +293,17 @@ public class WeatherManagerServer extends WeatherManagerBase {
 		//PacketDispatcher.sendPacketToAllAround(parStorm.pos.xCoord, parStorm.pos.yCoord, parStorm.pos.zCoord, syncRange, getWorld().provider.dimensionId, WeatherPacketHelper.createPacketForServerToClientSerialization("WeatherData", data));
 	}
 	
-	public void syncStormUpdate(StormObject parStorm) {
+	private void syncStormUpdate(Set<NBTTagCompound> stormObjectsData) {
 		//packets
 		NBTTagCompound data = new NBTTagCompound();
+		data.setInteger("stormCount", stormObjectsData.size());
 		data.setString("packetCommand", "WeatherData");
 		data.setString("command", "syncStormUpdate");
-		data.setTag("data", parStorm.nbtSyncForClient());
+		int stormNumber = 0;
+		for (NBTTagCompound stormObjectData : stormObjectsData) {
+			data.setTag("storm" + stormNumber, stormObjectData);
+			stormNumber++;
+		}
 		Weather.eventChannel.sendToDimension(PacketHelper.getNBTPacket(data, Weather.eventChannelName), getWorld().provider.dimensionId);
 	}
 	

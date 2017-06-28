@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -180,6 +181,9 @@ public class StormObject {
     
     //there is an issue with rainstorms sometimes never going away, this is a patch to mend the underlying issue i cant find yet
     public long ticksSinceLastPacketReceived = 0;
+
+    // Use to cache the value we push out to clients. This is NOT the payload we actually send out - it's just used by the server to remember what it's already pushed out.
+    private NBTTagCompound cachedClientNBTState;
 	
     //public static long lastStormFormed = 0;
     
@@ -264,7 +268,8 @@ public class StormObject {
 	public NBTTagCompound writeToNBT()
     {
 		
-		NBTTagCompound nbt = nbtSyncForClient();
+		nbtSyncForClient();
+		NBTTagCompound nbt = cachedClientNBTState;
 		
 		nbt.setDouble("vecX", motion.xCoord);
 		nbt.setDouble("vecY", motion.yCoord);
@@ -278,56 +283,79 @@ public class StormObject {
 	
 	//receiver method
 	public void nbtSyncFromServer(NBTTagCompound parNBT) {
-		ID = parNBT.getLong("ID");
+		
+		/*
+		System.out.println("Received payload from server; length=" + parNBT.func_150296_c().size());
+		Iterator iterator = parNBT.func_150296_c().iterator();
+		String keys = "";
+		while (iterator.hasNext()) {
+			keys = keys.concat((String)iterator.next() + "; ");
+		}
+		System.out.println("    " + keys);
+		*/
+
+		//CachedNBTTagCompound newData = new CachedNBTTagCompound(cachedClientNBTState);
+		//NBTTagCompound newData = new CachedNBTTagCompound(cachedClientNBTState);
+		
+		CachedNBTTagCompound newData = new CachedNBTTagCompound(parNBT);
+		newData.setCachedNBT(cachedClientNBTState);
+		
+		ID = newData.getLong("ID");
 		//Weather.dbg("StormObject " + ID + " receiving sync");
 		
-		pos = Vec3.createVectorHelper(parNBT.getInteger("posX"), parNBT.getInteger("posY"), parNBT.getInteger("posZ"));
-		size = parNBT.getInteger("size");
-		maxSize = parNBT.getInteger("maxSize");
+		pos = Vec3.createVectorHelper(newData.getInteger("posX"), newData.getInteger("posY"), newData.getInteger("posZ"));
+		size = newData.getInteger("size");
+		maxSize = newData.getInteger("maxSize");
 		
-		//state = parNBT.getInteger("state");
+		//state = newData.getInteger("state");
 		
-		//attrib_tornado_severity = parNBT.getInteger("attrib_tornado_severity");
+		//attrib_tornado_severity = newData.getInteger("attrib_tornado_severity");
 		
-		//attrib_highwind = parNBT.getBoolean("attrib_highwind");
-		//attrib_tornado = parNBT.getBoolean("attrib_tornado");
-		//attrib_hurricane = parNBT.getBoolean("attrib_hurricane");
-		attrib_precipitation = parNBT.getBoolean("attrib_rain");
-		attrib_waterSpout = parNBT.getBoolean("attrib_waterSpout");
+		//attrib_highwind = newData.getBoolean("attrib_highwind");
+		//attrib_tornado = newData.getBoolean("attrib_tornado");
+		//attrib_hurricane = newData.getBoolean("attrib_hurricane");
+		attrib_precipitation = newData.getBoolean("attrib_rain");
+		attrib_waterSpout = newData.getBoolean("attrib_waterSpout");
 		
-		currentTopYBlock = parNBT.getInteger("currentTopYBlock");
+		currentTopYBlock = newData.getInteger("currentTopYBlock");
 		
-		levelTemperature = parNBT.getFloat("levelTemperature");
-		levelWater = parNBT.getInteger("levelWater");
+		levelTemperature = newData.getFloat("levelTemperature");
+		levelWater = newData.getInteger("levelWater");
 		
-		layer = parNBT.getInteger("layer");
+		layer = newData.getInteger("layer");
 		
-		//curWeatherType = parNBT.getInteger("curWeatherType");
+		//curWeatherType = newData.getInteger("curWeatherType");
 		
-		//formingStrength = parNBT.getFloat("formingStrength");
+		//formingStrength = newData.getFloat("formingStrength");
 		
-		levelCurIntensityStage = parNBT.getInteger("levelCurIntensityStage");
-		levelCurStagesIntensity = parNBT.getFloat("levelCurStagesIntensity");
-		stormType = parNBT.getInteger("stormType");
+		levelCurIntensityStage = newData.getInteger("levelCurIntensityStage");
+		levelCurStagesIntensity = newData.getFloat("levelCurStagesIntensity");
+		stormType = newData.getInteger("stormType");
 		
-		hasStormPeaked = parNBT.getBoolean("hasStormPeaked");
+		hasStormPeaked = newData.getBoolean("hasStormPeaked");
 		
-		//overCastModeAndRaining = parNBT.getBoolean("overCastModeAndRaining");
+		//overCastModeAndRaining = newData.getBoolean("overCastModeAndRaining");
 		
-		isDead = parNBT.getBoolean("isDead");
+		isDead = newData.getBoolean("isDead");
+		
+		cachedClientNBTState = newData.getNewNBT();
 		
 		ticksSinceLastPacketReceived = 0;//manager.getWorld().getTotalWorldTime();
 	}
 	
 	//compose nbt data for packet (and serialization in future)
 	public NBTTagCompound nbtSyncForClient() {
-		NBTTagCompound data = new NBTTagCompound();
-		
+		CachedNBTTagCompound data = new CachedNBTTagCompound();
+		data.setCachedNBT(cachedClientNBTState);
+		//NBTTagCompound data = new NBTTagCompound();
+  		
+		data.setUpdateForced(true);
+		data.setLong("ID", ID);
+		data.setUpdateForced(false);
 		data.setInteger("posX", (int)pos.xCoord);
 		data.setInteger("posY", (int)pos.yCoord);
 		data.setInteger("posZ", (int)pos.zCoord);
 		
-		data.setLong("ID", ID);
 		data.setInteger("size", size);
 		data.setInteger("maxSize", maxSize);
 		
@@ -362,7 +390,106 @@ public class StormObject {
 		
 		data.setBoolean("isDead", isDead);
 		
-		return data;
+		cachedClientNBTState = data.getCachedNBT();
+		return data.getNewNBT();
+	}
+	
+	public class CachedNBTTagCompound {
+		private NBTTagCompound newData;
+		private NBTTagCompound cachedData;
+		private boolean forced = false;
+		
+		public CachedNBTTagCompound() {
+			this(new NBTTagCompound());
+		}
+		
+		public CachedNBTTagCompound(NBTTagCompound newData) {
+			this.newData = newData;
+		}
+		
+		public void setCachedNBT(NBTTagCompound cachedData) {
+			if (cachedData == null)
+				cachedData = new NBTTagCompound();
+			this.cachedData = cachedData;
+		}
+		
+		public NBTTagCompound getCachedNBT() {
+			return cachedData;
+		}
+		
+		public NBTTagCompound getNewNBT() {
+			return newData;
+		}
+		
+		public void setUpdateForced(boolean forced) {
+			this.forced = forced;
+		}
+
+		public long getLong(String key) {
+			if (!newData.hasKey(key))
+				newData.setLong(key, cachedData.getLong(key));
+			return newData.getLong(key);
+		}
+		
+		public void setLong(String key, long newVal) {
+			if (!cachedData.hasKey(key) || cachedData.getLong(key) != newVal || forced) {
+				newData.setLong(key, newVal);
+			}
+			cachedData.setLong(key, newVal);
+		}
+		
+		public int getInteger(String key) {
+			if (!newData.hasKey(key))
+				newData.setInteger(key, cachedData.getInteger(key));
+			return newData.getInteger(key);
+		}
+		
+		public void setInteger(String key, int newVal) {
+			if (!cachedData.hasKey(key) || cachedData.getInteger(key) != newVal || forced) {
+				newData.setInteger(key, newVal);
+			}
+			cachedData.setInteger(key, newVal);
+		}
+		
+		public short getShort(String key) {
+			if (!newData.hasKey(key))
+				newData.setShort(key, cachedData.getShort(key));
+			return newData.getShort(key);
+		}
+		
+		public void setShort(String key, short newVal) {
+			if (!cachedData.hasKey(key) || cachedData.getShort(key) != newVal || forced) {
+				newData.setShort(key, newVal);
+			}
+			cachedData.setShort(key, newVal);
+		}
+		
+		public boolean getBoolean(String key) {
+			if (!newData.hasKey(key))
+				newData.setBoolean(key, cachedData.getBoolean(key));
+			return newData.getBoolean(key);
+		}
+		
+		public void setBoolean(String key, boolean newVal) {
+			if (!cachedData.hasKey(key) || cachedData.getBoolean(key) != newVal || forced) {
+				newData.setBoolean(key, newVal);
+			}
+			cachedData.setBoolean(key, newVal);
+		}
+		
+		public float getFloat(String key) {
+			if (!newData.hasKey(key))
+				newData.setFloat(key, cachedData.getFloat(key));
+			return newData.getFloat(key);
+		}
+		
+		public void setFloat(String key, float newVal) {
+			if (!cachedData.hasKey(key) || cachedData.getFloat(key) != newVal || forced) {
+				newData.setFloat(key, newVal);
+			}
+			cachedData.setFloat(key, newVal);
+		}
+
 	}
 	
 	public NBTTagCompound nbtForIMC() {
@@ -572,6 +699,10 @@ public class StormObject {
 		Random rand = new org.bogdang.modifications.random.XSTR();
 		World world = manager.getWorld();
 		
+		//patch for worlds that are crashing due to storms that havent been removed since packet optimization bug 
+		if (size == 0) size = 1;
+		if (maxSize == 0) maxSize = 1;
+		
 		currentTopYBlock = world.getHeightValue(MathHelper.floor_double(pos.xCoord), MathHelper.floor_double(pos.zCoord));
 		//Weather.dbg("currentTopYBlock: " + currentTopYBlock);
 		if (levelCurIntensityStage >= STATE_THUNDER) {
@@ -643,6 +774,7 @@ public class StormObject {
 		
 		//if (entP != null) {
 		
+			if (size == 0) size = 1;
 			for (xx = (int) (pos.xCoord - size/2); xx < pos.xCoord + size/2; xx+=16) {
 				for (zz = (int) (pos.zCoord - size/2); zz < pos.zCoord + size/2; zz+=16) {
 			/*for (xx = (int) (entP.posX - size/2); xx < entP.posX + size/2; xx+=16) {
