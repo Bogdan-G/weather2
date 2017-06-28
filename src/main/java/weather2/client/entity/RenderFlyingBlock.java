@@ -46,11 +46,11 @@ public class RenderFlyingBlock extends Render
         
         float size = 0.3F;// - (age * 0.03F);
         
-        if (size < 0) size = 0;
-        
         if (var1 instanceof EntityMovingBlock) {
         	size = 1;
         }
+        
+        if (size < 0) size = 0;//move check, since below it there is one more that changes the meaning
         
         GL11.glTranslatef((float)var2, (float)var4, (float)var6);
         this.bindEntityTexture(var1);
@@ -67,9 +67,9 @@ public class RenderFlyingBlock extends Render
         if (var1 instanceof EntityMovingBlock) {
         	try {
         	Block dynamicRenderBlock = ((EntityMovingBlock) var1).tile;
-        	GL11.glRotatef((float)(age * 0.1F * 180.0D / 12.566370964050293D - 0.0D), 1.0F, 0.0F, 0.0F);
-            GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 1.0F, 0.0F);
-            GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 0.0F, 1.0F);
+        	GL11.glRotatef(age * 0.1F * 180.0F / 12.566370964050293F - 0.0F, 1.0F, 0.0F, 0.0F);
+            GL11.glRotatef(age * 0.1F * 180.0F / ((float)Math.PI * 2F) - 0.0F, 0.0F, 1.0F, 0.0F);
+            GL11.glRotatef(age * 0.1F * 180.0F / ((float)Math.PI * 2F) - 0.0F, 0.0F, 0.0F, 1.0F);
         	rb.setRenderBoundsFromBlock(dynamicRenderBlock);
 	        rb.renderBlockAsItem(dynamicRenderBlock, 0, 0.8F);
 	        } catch (Exception e) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);}
@@ -82,9 +82,9 @@ public class RenderFlyingBlock extends Render
         	for (int i = 0; i < Math.min(4, WeatherUtilParticle.maxRainDrops); i++) {
         		GL11.glPushMatrix();
         		GL11.glTranslatef((float)WeatherUtilParticle.rainPositions[i].xCoord * 3F, (float)WeatherUtilParticle.rainPositions[i].yCoord * 3F, (float)WeatherUtilParticle.rainPositions[i].zCoord * 3F);
-        		GL11.glRotatef((float)(age * 0.1F * 180.0D / 12.566370964050293D - 0.0D), 1.0F, 0.0F, 0.0F);
-                GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 1.0F, 0.0F);
-                GL11.glRotatef((float)(age * 0.1F * 180.0D / (Math.PI * 2D) - 0.0D), 0.0F, 0.0F, 1.0F);
+        		GL11.glRotatef(age * 0.1F * 180.0F / 12.566370964050293F - 0.0F, 1.0F, 0.0F, 0.0F);
+                GL11.glRotatef(age * 0.1F * 180.0F / ((float)Math.PI * 2F) - 0.0F, 0.0F, 1.0F, 0.0F);
+                GL11.glRotatef(age * 0.1F * 180.0F / ((float)Math.PI * 2F) - 0.0F, 0.0F, 0.0F, 1.0F);
         		rb.setRenderBoundsFromBlock(renderBlock);
     	        rb.renderBlockAsItem(renderBlock, 0, 0.8F);
         		//GL11.glTranslatef((float)-WeatherUtilParticle.rainPositions[i].xCoord, (float)-WeatherUtilParticle.rainPositions[i].yCoord, (float)-WeatherUtilParticle.rainPositions[i].zCoord);

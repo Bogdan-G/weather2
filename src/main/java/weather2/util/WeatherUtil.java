@@ -104,7 +104,7 @@ public class WeatherUtil {
         }
         catch (Exception ex)
         {
-            ex.printStackTrace();
+            cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
             return false;
         }
     }

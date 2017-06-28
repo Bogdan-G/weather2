@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -21,6 +22,18 @@ public class TileEntityTSiren extends TileEntity
     public long lastVolUpdate = 0L;
     //public int soundID = -1;
     public int lineBeingEdited = -1;
+    protected AxisAlignedBB aabb;
+
+    @Override
+    public void validate() {
+    	super.validate();
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+    	return aabb;
+    }
 
     public void updateEntity()
     {

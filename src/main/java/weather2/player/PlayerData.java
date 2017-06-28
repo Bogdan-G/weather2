@@ -74,9 +74,9 @@ public class PlayerData {
 	    	CompressedStreamTools.writeCompressed(parData, fos);
 	    	fos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			Weather.dbg("Error writing Weather2 player data for " + username);
-		} finally {try {if (fos !=null) fos.close();} catch (IOException ex) {ex.printStackTrace();}}
+		} finally {try {if (fos !=null) fos.close();} catch (IOException ex) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);}}
 	}
 	
 }

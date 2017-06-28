@@ -21,6 +21,11 @@ public class BlockWeatherMachine extends BlockContainer
     {
         return 90;
     }
+    
+    public int tickRate(World world)
+    {
+        return 90;
+    }
 
     public void updateTick(World var1, int var2, int var3, int var4, Random var5) {}
 

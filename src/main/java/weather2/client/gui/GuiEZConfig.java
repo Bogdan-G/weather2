@@ -232,7 +232,7 @@ public class GuiEZConfig extends GuiScreen {
 				
 				this.drawString(this.fontRendererObj, (curDimListPage+1) + "/" + (listDimNames.size() / curDimListCountPerPage + 1), xStart+80, yStart2+194, 16777215);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			}
 		}
 	}
@@ -316,7 +316,7 @@ public class GuiEZConfig extends GuiScreen {
 				}
 			} catch (Exception ex) {
 				//Weather.dbg("error");
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			}
 			
 			
@@ -430,7 +430,7 @@ public class GuiEZConfig extends GuiScreen {
 				}
 			} catch (Exception ex) {
 				//Weather.dbg("error");
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			}
 			
 			
@@ -653,7 +653,7 @@ public class GuiEZConfig extends GuiScreen {
 	        		Weather.dbg("nbtSendCache: " + nbtSendCache);
         		}
         	} catch (Exception ex) {
-        		ex.printStackTrace();
+        		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
         	}
         }
         

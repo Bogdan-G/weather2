@@ -72,7 +72,7 @@ public class EntityFallingSnowFX extends EntityRotFX implements WindHandler
         }
 
         this.particleScale = this.rand.nextFloat() * this.rand.nextFloat() * 6.0F;
-        this.particleMaxAge = (int)(16.0D/* / ((double)this.rand.nextFloat() * 0.8D + 0.2D)*/) + 2;
+        this.particleMaxAge = (16/* / ((double)this.rand.nextFloat() * 0.8D + 0.2D)*/) + 2;
         this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
         this.particleGravity = 1.0F;
         //this.particleScale = 1F;

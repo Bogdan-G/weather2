@@ -153,7 +153,7 @@ public class TileEntityWeatherForecastRenderer extends TileEntitySpecialRenderer
                 
                 //Icon particleIcon = CommonProxy.blockWeatherDeflector.getBlockTextureFromSide(0);
                 
-                GL11.glTranslated(posRenderOffset.xCoord, 0, posRenderOffset.zCoord);
+                GL11.glTranslatef(posRenderOffset.xCoord, 0, posRenderOffset.zCoord);
                 
                 if (storm.levelCurIntensityStage >= StormObject.STATE_FORMING) {
                 	if (storm.stormType == StormObject.TYPE_WATER) {
@@ -183,7 +183,7 @@ public class TileEntityWeatherForecastRenderer extends TileEntitySpecialRenderer
                 
             	//renderLivingLabel("r", x, y + 1.4F, z, 1, 10, 10, RenderManager.instance.playerViewY);
                 
-                GL11.glTranslated(-posRenderOffset.xCoord, 0, -posRenderOffset.zCoord);
+                GL11.glTranslatef(-posRenderOffset.xCoord, 0, -posRenderOffset.zCoord);
                 
                 GL11.glPopMatrix();
     		}

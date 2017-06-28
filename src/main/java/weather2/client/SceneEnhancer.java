@@ -94,7 +94,7 @@ public class SceneEnhancer implements Runnable {
 				tickClientThreaded();
 				Thread.sleep(ConfigMisc.Thread_Particle_Process_Delay);
 			} catch (Throwable throwable) {
-                throwable.printStackTrace();
+                throwablcpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);
             }
 		}
 	}
@@ -211,7 +211,7 @@ public class SceneEnhancer implements Runnable {
 			}
 		} catch (Exception ex) {
     		System.out.println("Weather2: Error handling sound play queue: ");
-    		ex.printStackTrace();
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
     }
 	
@@ -612,7 +612,7 @@ public class SceneEnhancer implements Runnable {
 	        }
     	} catch (Exception ex) {
     		System.out.println("Weather2: Error handling particle spawn queue: ");
-    		ex.printStackTrace();
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
 
         spawnQueue.clear();
@@ -633,7 +633,7 @@ public class SceneEnhancer implements Runnable {
         	try {
         		Thread.sleep(1000L);
         	} catch (Exception ex) {
-        		ex.printStackTrace();
+        		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
         	}
             return;
         }
@@ -1131,7 +1131,7 @@ public class SceneEnhancer implements Runnable {
 	                        if (entity1.onGround)
 	                        {
 	                            //entity1.onGround = false;
-	                            entity1.motionY += (double)rand.nextFloat() * entity1.motionX;
+	                            entity1.motionY += rand.nextFloat() * entity1.motionX;
 	                        }
 	
 	                        if (entity1.motionX < 0.01F && entity1.motionZ < 0.01F)

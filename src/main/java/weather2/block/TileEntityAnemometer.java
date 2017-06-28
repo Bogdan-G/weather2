@@ -34,6 +34,7 @@ public class TileEntityAnemometer extends TileEntity
 	public float smoothSpeedAdj = 0.1F;
 	
 	public boolean isOutsideCached = false;
+	protected AxisAlignedBB aabb;
 
     public void updateEntity()
     {
@@ -79,9 +80,15 @@ public class TileEntityAnemometer extends TileEntity
     }
     
     @Override
+    public void validate() {
+    	super.validate();
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 3, zCoord + 1);
+    }
+    
+    @Override
     @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox() {
-    	return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 3, zCoord + 1);
+    	return aabb;
     }
 
     public void writeToNBT(NBTTagCompound var1)

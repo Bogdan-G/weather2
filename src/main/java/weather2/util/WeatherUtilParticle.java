@@ -72,7 +72,7 @@ public class WeatherUtilParticle {
         catch (Exception ex)
         {
         	//System.out.println("temp message: obf reflection fail!");
-        	//ex.printStackTrace();
+        	//cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
             try
             {
                 field = (EffectRenderer.class).getDeclaredField("fxLayers");

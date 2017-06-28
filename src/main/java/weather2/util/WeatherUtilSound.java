@@ -87,7 +87,7 @@ public class WeatherUtilSound {
 	        }
 		} catch (Exception ex) {
 			//error from resource changes, sound system got reset
-        	ex.printStackTrace();
+        	cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
         	
         	getSoundSystem();
         }
@@ -188,7 +188,7 @@ public class WeatherUtilSound {
 	            }
 	        }
     	} catch (Exception ex) {
-    		ex.printStackTrace();
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
         	//despite forcing a getSoundSystem(); call, some are still getting a crash from inside usage of sndSystem.backgroundMusic, this is an attempt to silently catch it
         	//iirc original issue was resource pack switching
     		

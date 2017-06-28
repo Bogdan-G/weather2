@@ -155,7 +155,7 @@ public class CommandWeather2 extends CommandBase {
 		} catch (Exception ex) {
 			System.out.println("Exception handling Weather2 command");
 			CoroUtil.sendPlayerMsg((EntityPlayerMP) var1, helpMsgStorm);
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 		}
 		
 	}

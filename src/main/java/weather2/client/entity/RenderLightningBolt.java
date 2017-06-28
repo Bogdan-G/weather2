@@ -27,10 +27,10 @@ public class RenderLightningBolt extends Render
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
         try {
-	        double[] adouble = new double[8];
-	        double[] adouble1 = new double[8];
-	        double d3 = 0.0D;
-	        double d4 = 0.0D;
+	        float[] afloat = new float[8];
+	        float[] afloat1 = new float[8];
+	        float d3 = 0.0F;
+	        float d4 = 0.0F;
 	        Random random = new org.bogdang.modifications.random.XSTR(par1EntityLightningBolt.boltVertex);
 	
 	        //Weather.dbg(par1EntityLightningBolt.posX + " - " + par1EntityLightningBolt.posY + " - " + par1EntityLightningBolt.posZ);
@@ -38,10 +38,10 @@ public class RenderLightningBolt extends Render
 	        
 	        for (int i = 7; i >= 0; --i)
 	        {
-	            adouble[i] = d3;
-	            adouble1[i] = d4;
-	            d3 += (double)(random.nextInt(11) - 5);
-	            d4 += (double)(random.nextInt(11) - 5);
+	            afloat[i] = d3;
+	            afloat1[i] = d4;
+	            d3 += random.nextInt(11) - 5;
+	            d4 += random.nextInt(11) - 5;
 	        }
 	
 	        for (int j = 0; j < 4; ++j)
@@ -63,72 +63,72 @@ public class RenderLightningBolt extends Render
 	                    i1 = l - 2;
 	                }
 	
-	                double d5 = adouble[l] - d3;
-	                double d6 = adouble1[l] - d4;
+	                float d5 = afloat[l] - d3;
+	                float d6 = afloat1[l] - d4;
 	
 	                for (int j1 = l; j1 >= i1; --j1)
 	                {
-	                    double d7 = d5;
-	                    double d8 = d6;
+	                    float d7 = d5;
+	                    float d8 = d6;
 	
 	                    if (k == 0)
 	                    {
-	                        d5 += (double)(random1.nextInt(11) - 5);
-	                        d6 += (double)(random1.nextInt(11) - 5);
+	                        d5 += random1.nextInt(11) - 5;
+	                        d6 += random1.nextInt(11) - 5;
 	                    }
 	                    else
 	                    {
-	                        d5 += (double)(random1.nextInt(31) - 15);
-	                        d6 += (double)(random1.nextInt(31) - 15);
+	                        d5 += random1.nextInt(31) - 15;
+	                        d6 += random1.nextInt(31) - 15;
 	                    }
 	
 	                    tessellator.startDrawing(5);
 	                    float f2 = 0.5F;
 	                    tessellator.setColorRGBA_F(0.9F * f2, 0.9F * f2, 1.0F * f2, 0.3F);
-	                    double d9 = 0.1D + (double)j * 0.2D;
+	                    float d9 = 0.1F + (float)j * 0.2F;
 	
 	                    if (k == 0)
 	                    {
-	                        d9 *= (double)j1 * 0.1D + 1.0D;
+	                        d9 *= j1 * 0.1F + 1.0F;
 	                    }
 	
-	                    double d10 = 0.1D + (double)j * 0.2D;
+	                    float d10 = 0.1F + j * 0.2F;
 	
 	                    if (k == 0)
 	                    {
-	                        d10 *= (double)(j1 - 1) * 0.1D + 1.0D;
+	                        d10 *= (j1 - 1) * 0.1F + 1.0F;
 	                    }
 	
 	                    for (int k1 = 0; k1 < 5; ++k1)
 	                    {
-	                        double d11 = par2 + 0.5D - d9;
-	                        double d12 = par6 + 0.5D - d9;
+	                        float d11 = par2 + 0.5F - d9;
+	                        float d12 = par6 + 0.5F - d9;
 	
 	                        if (k1 == 1 || k1 == 2)
 	                        {
-	                            d11 += d9 * 2.0D;
+	                            d11 += d9 * 2.0F;
 	                        }
 	
 	                        if (k1 == 2 || k1 == 3)
 	                        {
-	                            d12 += d9 * 2.0D;
+	                            d12 += d9 * 2.0F;
 	                        }
 	
-	                        double d13 = par2 + 0.5D - d10;
-	                        double d14 = par6 + 0.5D - d10;
+	                        float d13 = par2 + 0.5F - d10;
+	                        float d14 = par6 + 0.5F - d10;
 	
 	                        if (k1 == 1 || k1 == 2)
 	                        {
-	                            d13 += d10 * 2.0D;
+	                            d13 += d10 * 2.0F;
 	                        }
 	
 	                        if (k1 == 2 || k1 == 3)
 	                        {
-	                            d14 += d10 * 2.0D;
+	                            d14 += d10 * 2.0F;
 	                        }
 	
-	                        tessellator.addVertex(d13 + d5, par4 + (double)(j1 * 16), d14 + d6);
-	                        tessellator.addVertex(d11 + d7, par4 + (double)((j1 + 1) * 16), d12 + d8);
+	                        tessellator.addVertex(d13 + d5, par4 + (j1 * 16), d14 + d6);
+	                        tessellator.addVertex(d11 + d7, par4 + ((j1 + 1) * 16), d12 + d8);
 	                    }
 	
 	                    tessellator.draw();
@@ -136,7 +136,7 @@ public class RenderLightningBolt extends Render
 	            }
 	        }
         } catch (Exception ex) {
-        	ex.printStackTrace();
+        	cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
         }
 
         GL11.glDisable(GL11.GL_BLEND);

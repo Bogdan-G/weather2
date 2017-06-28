@@ -171,7 +171,7 @@ public class WeatherUtilConfig {
 			processListsReverse();
 			
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 		}
 		
 		ConfigMod.configLookup.get(modID).writeConfigFile(true);
@@ -335,7 +335,7 @@ public class WeatherUtilConfig {
 			processListsReverse();
 			
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 		}
 		
 		ConfigMod.configLookup.get(modID).writeConfigFile(true);
@@ -457,9 +457,9 @@ public class WeatherUtilConfig {
 	    	CompressedStreamTools.writeCompressed(parData, fos);
 	    	fos.close();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			Weather.dbg("Error writing Weather2 EZ GUI data");
-		} finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {ex.printStackTrace();}}
+		} finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);}}
 	}
 	
 	public static NBTTagCompound nbtReadNBTFromDisk(boolean loadForClient) {
@@ -476,7 +476,7 @@ public class WeatherUtilConfig {
 				data = CompressedStreamTools.readCompressed(new FileInputStream(fileURL));
 			}
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			Weather.dbg("Error reading Weather2 EZ GUI data");
 		}
 		return data;

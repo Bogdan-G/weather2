@@ -109,7 +109,7 @@ public class Weather {
     		//factoring in we dont do per world settings for this
     		//WeatherUtilConfig.nbtSaveDataAll();
     	} catch (Exception ex) {
-    		ex.printStackTrace();
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
     }
 

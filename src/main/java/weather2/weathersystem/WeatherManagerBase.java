@@ -68,7 +68,7 @@ public class WeatherManagerBase {
 			lookupStormObjectsByLayer.get(1).clear();
 			lookupStormObjectsByLayer.get(2).clear();
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 		}
 		
 		for (int i = 0; i < getVolcanoObjects().size(); i++) {
@@ -293,7 +293,7 @@ public class WeatherManagerBase {
 			fos = new FileOutputStream(saveFolder + "WeatherData_" + dim + ".dat");
 	    	CompressedStreamTools.writeCompressed(mainNBT, fos);
 	    	fos.close();
-		} catch (Exception ex) { ex.printStackTrace(); } finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {ex.printStackTrace();}}
+		} catch (Exception ex) { cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex); } finally {try {if (fos !=null) fos.close();} catch (java.io.IOException ex) {cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);}}
 	}
 	
 	public void readFromFile() {
@@ -311,7 +311,7 @@ public class WeatherManagerBase {
 				//readFail = true; - first run, no point
 			}
 		} catch (Exception ex) { 
-			ex.printStackTrace();
+			cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			readFail = true;
 		}
 		
@@ -322,7 +322,7 @@ public class WeatherManagerBase {
 				if (tmp.exists()) FileUtils.copyFile(tmp, (new File(saveFolder + "WeatherData_" + dim + "_BACKUP1.dat")));
 				if ((new File(saveFolder + "WeatherData_" + dim + ".dat").exists())) FileUtils.copyFile((new File(saveFolder + "WeatherData_" + dim + ".dat")), (new File(saveFolder + "WeatherData_" + dim + "_BACKUP0.dat")));
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			}
 			
 		} else {
@@ -335,7 +335,7 @@ public class WeatherManagerBase {
 					System.out.println("WARNING! Failed to find backup file WeatherData_BACKUP0.dat, nothing loaded");
 				}
 			} catch (Exception ex) { 
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 				System.out.println("WARNING! Error loading backup file WeatherData_BACKUP0.dat, nothing loaded");
 			}
 		}
@@ -357,7 +357,7 @@ public class WeatherManagerBase {
 			try {
 				to.readFromNBT(teamData);
 			} catch (Exception ex) {
-				ex.printStackTrace();
+				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 			}
 			//to.initAITree();
 			addVolcanoObject(to);
@@ -384,7 +384,7 @@ public class WeatherManagerBase {
 				try {
 					to.readFromNBT(teamData);
 				} catch (Exception ex) {
-					ex.printStackTrace();
+					cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 				}
 				addStormObject(to);
 				

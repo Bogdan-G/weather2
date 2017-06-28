@@ -112,7 +112,7 @@ public class ServerTickHandler
 		    		//System.out.println(listMsgs.get(i).key + " - modID: " + listMsgs.get(i).getSender() + " - source: " + listMsgs.get(i).toString() + " - " + listMsgs.get(i).getNBTValue());
 		    	}
 	    	} catch (Exception ex) {
-	    		ex.printStackTrace();
+	    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
 	    	}
         }
     }

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import weather2.ServerTickHandler;
 import weather2.config.ConfigMisc;
 import weather2.weathersystem.WeatherManagerServer;
@@ -36,6 +36,18 @@ public class TileEntityWeatherMachine extends TileEntity
 	public boolean lockStormHere = true;
 	
 	public StormObject lastTickStormObject = null;
+    protected AxisAlignedBB aabb;
+
+    @Override
+    public void validate() {
+    	super.validate();
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+    	return aabb;
+    }
 
 	public void cycleWeatherType() {
 		weatherType++;

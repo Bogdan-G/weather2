@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import weather2.ClientTickHandler;
 import weather2.ServerTickHandler;
 import weather2.weathersystem.WeatherManagerServer;
@@ -14,6 +14,19 @@ import weather2.weathersystem.storm.StormObject;
 public class TileEntityWeatherDeflector extends TileEntity
 {
 	public int deflectorRadius = 150;
+
+    protected AxisAlignedBB aabb;
+
+    @Override
+    public void validate() {
+    	super.validate();
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+    	return aabb;
+    }
 
     public void updateEntity()
     {
