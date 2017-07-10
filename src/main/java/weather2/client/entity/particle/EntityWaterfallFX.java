@@ -21,6 +21,8 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
     public EntityWaterfallFX(World var1, double var2, double var4, double var6, double var8, double var10, double var12, double var14, int var16)
     {
         super(var1, var2, var4, var6, var8, var10, var12);
+        /*this.renderDistanceWeight = 40.0D;
+        this.fallDistance = 40f;*/
         this.motionX = var8 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
         this.motionY = var10 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
         this.motionZ = var12 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
@@ -63,7 +65,7 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
 
         //this.particleScale = this.rand.nextFloat() * this.rand.nextFloat() * 6.0F + 1.0F;
         this.particleMaxAge = 18;
-        this.particleMaxAge = (int)((double)((float)this.particleMaxAge) * var14);
+        this.particleMaxAge = (int)(this.particleMaxAge * var14)+500;//small age, particle no fall to ground
         
         this.particleGravity = 0.2F;
         this.particleScale = 0.5F;
@@ -107,9 +109,9 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         this.prevPosZ = this.posZ;
         
         float adj = 0.08F * rand.nextFloat();
-        //this.motionX += adj * org.bogdang.modifications.math.MathHelperLite.sin(worldObj.getWorldTime());
-        //this.motionZ += adj * org.bogdang.modifications.math.MathHelperLite.sin(worldObj.getWorldTime());
-        //this.motionY += adj * org.bogdang.modifications.math.MathHelperLite.cos(worldObj.getWorldTime());
+        //this.motionX += adj * Math.sin(worldObj.getWorldTime());
+        //this.motionZ += adj * Math.sin(worldObj.getWorldTime());
+        //this.motionY += adj * Math.cos(worldObj.getWorldTime());
 
         if (particleRed < 255) particleRed += 0.01F;
         if (particleGreen < 255) particleGreen += 0.01F;
@@ -136,12 +138,12 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         	Double dir = BlockLiquid.getFlowDirection(worldObj, (int)Math.floor(posX), (int)Math.floor(posY), (int)Math.floor(posZ), Material.water);
         	
         	if (dir != -1000) {
-            	//System.out.println("uhhhh: " + dir);
+            	//cpw.mods.fml.common.FMLLog.info("uhhhh: " + dir);
         		
         		float speed = 0.005F;
         		
-        		this.motionX -= org.bogdang.modifications.math.MathHelperLite.sin(dir) * speed;
-        		this.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(dir) * speed;
+        		this.motionX -= Math.sin(dir) * speed;
+        		this.motionZ += Math.cos(dir) * speed;
             }
         	
         	float range = 0.03F;
@@ -159,7 +161,7 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         		
         	} else {
         		//double remain = ((this.boundingBox.minY) - ((int)Math.floor(this.boundingBox.minY)));
-        		//System.out.println("remain: " + remain);
+        		//cpw.mods.fml.common.FMLLog.info("remain: " + remain);
         		//if (remain < 0.3D) {
         		//this.handleWaterMovement();
         		//this.handleWaterMovement();
@@ -192,10 +194,10 @@ public class EntityWaterfallFX extends EntityRotFX implements WindHandler
         
         float height = ((10-meta2) * 0.1F);
         
-        //System.out.println("adjusted height: " + height);
+        //cpw.mods.fml.common.FMLLog.info("adjusted height: " + height);
         
         if ((id.getMaterial() == Material.water) && motionY > 0F && this.posY > ((int)Math.floor(this.posY)) + height) {
-        	//System.out.println("meta: " + meta);
+        	//cpw.mods.fml.common.FMLLog.info("meta: " + meta);
         	//this.posY = ((int)Math.floor(this.posY)) + height;
         	//this.setPosition(posX, posY, posZ);
         	this.motionY = -0.05F;

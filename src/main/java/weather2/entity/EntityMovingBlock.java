@@ -119,11 +119,9 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
 
     public void onUpdate()
     {
-    	//new kill off when distant method
-    	if (!worldObj.isRemote) {
-	    	if (this.worldObj.getClosestPlayer(this.posX, 50, this.posZ, 140) == null) {
-				setDead();
-			}
+    	//new kill off when distant method//50->255
+    	if (!worldObj.isRemote && this.worldObj.getClosestPlayer(this.posX, 255, this.posZ, 140) == null) {
+		setDead();
     	}
     	
         if (CoroUtilBlock.isAir(this.tile))
@@ -138,14 +136,16 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
             {
                 this.mode = 0;
 
-                if (this.tileentity == null && ConfigMisc.Storm_Tornado_rarityOfDisintegrate != -1 && this.rand.nextInt((ConfigMisc.Storm_Tornado_rarityOfDisintegrate + 1) * 20) == 0)
+                if (this.tileentity == null) {
+                if (ConfigMisc.Storm_Tornado_rarityOfDisintegrate != -1 && this.rand.nextInt((ConfigMisc.Storm_Tornado_rarityOfDisintegrate + 1) * 20) == 0)
                 {
                     this.setDead();
                 }
 
-                if (this.tileentity == null && ConfigMisc.Storm_Tornado_rarityOfFirenado != -1 && this.rand.nextInt((ConfigMisc.Storm_Tornado_rarityOfFirenado + 1) * 20) == 0)
+                if (ConfigMisc.Storm_Tornado_rarityOfFirenado != -1 && this.rand.nextInt((ConfigMisc.Storm_Tornado_rarityOfFirenado + 1) * 20) == 0)
                 {
                     this.tile = Blocks.fire;
+                }
                 }
             }
 
@@ -221,7 +221,7 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
                 	}
                     
                     if (ConfigMisc.Storm_FlyingBlocksHurt && Math.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ * this.motionZ) > 0.4F) {
-                    	//System.out.println("damaging with block: " + var10);
+                    	//cpw.mods.fml.common.FMLLog.info("damaging with block: " + var10);
                     	
                     	DamageSource ds = DamageSource.causeThrownDamage(this, this);
                 		ds.damageType = "wm.movingblock";
@@ -369,10 +369,10 @@ public class EntityMovingBlock extends Entity implements IEntityAdditionalSpawnD
             byte var20 = 50;
             int var21 = (int)(this.posZ + this.motionZ * 5.0D);
 
-            if (!this.worldObj.checkChunksExist(var11, var20, var21, var11, var20, var21))
+            /*if (!this.worldObj.checkChunksExist(var11, var20, var21, var11, var20, var21))
             {
                 this.setDead();
-            }
+            }*/
 
             this.prevPosX = this.posX;
             this.prevPosY = this.posY;

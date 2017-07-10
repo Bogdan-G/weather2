@@ -40,6 +40,7 @@ public class TornadoHelper {
     
     public int tornadoBaseSize = 5;
     public int grabDist = 100;
+    private static Random rand = new org.bogdang.modifications.random.XSTR();
     
     //potentially an issue var
     public boolean lastTickPlayerClose;
@@ -94,7 +95,7 @@ public class TornadoHelper {
         
         forceRotate(parWorld);
         
-        Random rand = new org.bogdang.modifications.random.XSTR();
+        //Random rand = new org.bogdang.modifications.random.XSTR();
         
         //confirm this is correct, changing to formation use!
         //int spawnYOffset = (int) storm.currentTopYBlock;
@@ -334,7 +335,7 @@ public class TornadoHelper {
 	                    
 	                    blockCount++;
 	                    
-	                    //if (WeatherMod.debug && parWorld.getWorldTime() % 60 == 0) System.out.println("ripping, count: " + WeatherMod.blockCount);
+	                    //if (WeatherMod.debug && parWorld.getWorldTime() % 60 == 0) cpw.mods.fml.common.FMLLog.info("ripping, count: " + WeatherMod.blockCount);
 
 	                    mBlock.setPosition(tryX, tryY, tryZ);
 	                    
@@ -484,7 +485,7 @@ public class TornadoHelper {
                     {
                         if (blockCount + 5 > ConfigMisc.Storm_Tornado_maxBlocksPerStorm)
                         {
-                            if (entity1.posY > 255)
+                            if (entity1.posY > 255)//strange, block move in top of the funnel, and disappear, they do not reach 256 heights
                             {
                                 entity1.setDead();
                                 //System.out.println(blockCount);
@@ -633,7 +634,7 @@ public class TornadoHelper {
     {
         Entity soundTarget = source;
 
-        Random rand = new org.bogdang.modifications.random.XSTR();
+        //Random rand = new org.bogdang.modifications.random.XSTR();
         
         // should i?
         //soundTarget = this;

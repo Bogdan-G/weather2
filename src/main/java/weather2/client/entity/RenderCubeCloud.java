@@ -54,7 +54,7 @@ public class RenderCubeCloud extends Render
         
         float size = 80F;// - (age * 0.03F);
         
-        if (size < 0) size = 0;
+        //if (size < 0) size = 0;
         
         
         

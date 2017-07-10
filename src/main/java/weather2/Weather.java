@@ -84,7 +84,7 @@ public class Weather {
     
     public static void initTry() {
     	if (initProperNeededForWorld) {
-    		System.out.println("Weather2 being reinitialized");
+    		cpw.mods.fml.common.FMLLog.info("Weather2 being reinitialized");
     		initProperNeededForWorld = false;
 	    	CoroUtilFile.getWorldFolderName();
 	    	

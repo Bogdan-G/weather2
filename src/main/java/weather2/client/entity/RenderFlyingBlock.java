@@ -46,11 +46,12 @@ public class RenderFlyingBlock extends Render
         
         float size = 0.3F;// - (age * 0.03F);
         
-        if (var1 instanceof EntityMovingBlock) {
+        boolean isEMB = var1 instanceof EntityMovingBlock;
+        if (isEMB) {
         	size = 1;
         }
         
-        if (size < 0) size = 0;//move check, since below it there is one more that changes the meaning
+        //if (size < 0) size = 0;//move check, since below it there is one more that changes the meaning
         
         GL11.glTranslatef((float)var2, (float)var4, (float)var6);
         this.bindEntityTexture(var1);
@@ -64,7 +65,7 @@ public class RenderFlyingBlock extends Render
         //tess.setBrightness(255);
         //tess.setColorOpaque_F(255, 255, 255);
         //renderBlock = Block.netherrack;
-        if (var1 instanceof EntityMovingBlock) {
+        if (isEMB) {
         	try {
         	Block dynamicRenderBlock = ((EntityMovingBlock) var1).tile;
         	GL11.glRotatef(age * 0.1F * 180.0F / 12.566370964050293F - 0.0F, 1.0F, 0.0F, 0.0F);

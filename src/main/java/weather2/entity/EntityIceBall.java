@@ -33,9 +33,9 @@ public class EntityIceBall extends EntityThrowableUsefull implements IWindHandle
 		
 		float speed = 0.7F;
 		float f = 0.4F;
-        this.motionX = (double)(-MathHelper.sin(-this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(-this.rotationPitch / 180.0F * (float)Math.PI) * f);
-        this.motionZ = (double)(MathHelper.cos(-this.rotationYaw / 180.0F * (float)Math.PI) * MathHelper.cos(-this.rotationPitch / 180.0F * (float)Math.PI) * f);
-        this.motionY = (double)(-MathHelper.sin((-this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * f);
+        this.motionX = (-Math.sin(-this.rotationYaw / 180.0F * (float)Math.PI) * Math.cos(-this.rotationPitch / 180.0F * (float)Math.PI) * f);
+        this.motionZ = (Math.cos(-this.rotationYaw / 180.0F * (float)Math.PI) * Math.cos(-this.rotationPitch / 180.0F * (float)Math.PI) * f);
+        this.motionY = (-Math.sin((-this.rotationPitch + this.func_70183_g()) / 180.0F * (float)Math.PI) * f);
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, speed, 1.0F);
 	}
 
@@ -186,7 +186,7 @@ public class EntityIceBall extends EntityThrowableUsefull implements IWindHandle
 		if (!worldObj.isRemote) {
 			worldObj.playSoundEffect(posX, posY, posZ, "step.stone", 3F, 5F);//0.2F + worldObj.rand.nextFloat() * 0.1F);
 			setDead();
-			//System.out.println("server: " + posX);
+			//cpw.mods.fml.common.FMLLog.info("server: " + posX);
 		} else {
 			tickDeath();
 		}
@@ -207,7 +207,7 @@ public class EntityIceBall extends EntityThrowableUsefull implements IWindHandle
 	@SideOnly(Side.CLIENT)
 	public void tickDeath() {
 		if (!hasDeathTicked) {
-			//System.out.println("client: " + posX);
+			//cpw.mods.fml.common.FMLLog.info("client: " + posX);
 			hasDeathTicked = true;
 		}
 	}

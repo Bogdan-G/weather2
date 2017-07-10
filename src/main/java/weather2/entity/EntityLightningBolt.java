@@ -85,7 +85,7 @@ public class EntityLightningBolt extends EntityWeatherEffect
     {
         super.onUpdate();
         
-        //System.out.println("remote: " + worldObj.isRemote);
+        //cpw.mods.fml.common.FMLLog.info("remote: " + worldObj.isRemote);
 
         //making client side only to fix cauldron issue
         if (worldObj.isRemote) {

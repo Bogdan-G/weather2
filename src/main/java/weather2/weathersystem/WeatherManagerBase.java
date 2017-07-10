@@ -233,7 +233,7 @@ public class WeatherManagerBase {
 			if (storm == null || storm.isDead) continue;
 			double dist = storm.pos.distanceTo(parPos);
 			/*if (getWorld().isRemote) {
-				System.out.println("close storm candidate: " + dist + " - " + storm.state + " - " + storm.attrib_rain);
+				cpw.mods.fml.common.FMLLog.info("close storm candidate: " + dist + " - " + storm.state + " - " + storm.attrib_rain);
 			}*/
 			if (dist < closestDist && dist <= maxDist) {
 				if ((storm.attrib_precipitation && orRain) || (severityFlagMin == -1 || storm.levelCurIntensityStage >= severityFlagMin)) {
@@ -326,17 +326,17 @@ public class WeatherManagerBase {
 			}
 			
 		} else {
-			System.out.println("WARNING! Weather2 File: WeatherData.dat failed to load, automatically restoring to backup from previous game run");
+			cpw.mods.fml.common.FMLLog.info("WARNING! Weather2 File: WeatherData.dat failed to load, automatically restoring to backup from previous game run");
 			try {
 				//auto restore from most recent backup
 				if ((new File(saveFolder + "WeatherData_" + dim + "_BACKUP0.dat")).exists()) {
 					rtsNBT = CompressedStreamTools.readCompressed(new FileInputStream(saveFolder + "WeatherData_" + dim + "_BACKUP0.dat"));
 				} else {
-					System.out.println("WARNING! Failed to find backup file WeatherData_BACKUP0.dat, nothing loaded");
+					cpw.mods.fml.common.FMLLog.info("WARNING! Failed to find backup file WeatherData_BACKUP0.dat, nothing loaded");
 				}
 			} catch (Exception ex) { 
 				cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
-				System.out.println("WARNING! Error loading backup file WeatherData_BACKUP0.dat, nothing loaded");
+				cpw.mods.fml.common.FMLLog.info("WARNING! Error loading backup file WeatherData_BACKUP0.dat, nothing loaded");
 			}
 		}
 		
@@ -391,7 +391,7 @@ public class WeatherManagerBase {
 				//THIS LINE NEEDS REFINING FOR PLAYERS WHO JOIN AFTER THE FACT!!!
 				((WeatherManagerServer)(this)).syncStormNew(to);
 			} else {
-				System.out.println("WARNING: trying to load storm objects for missing dimension: " + dim);
+				cpw.mods.fml.common.FMLLog.info("WARNING: trying to load storm objects for missing dimension: " + dim);
 			}
 			
 			//listVolcanoes.add(to);

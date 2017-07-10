@@ -53,7 +53,7 @@ public class TileEntityWindVane extends TileEntity
 	    		float targetAngle = WindReader.getWindAngle(worldObj, Vec3.createVectorHelper(xCoord, yCoord, zCoord));
 	    		float windSpeed = WindReader.getWindSpeed(worldObj, Vec3.createVectorHelper(xCoord, yCoord, zCoord));
 	    		
-	    		//System.out.println("targetAngle: " + targetAngle);
+	    		//cpw.mods.fml.common.FMLLog.info("targetAngle: " + targetAngle);
 	    		
 	    		if (smoothAngle > 180) smoothAngle-=360;
 	    		if (smoothAngle < -180) smoothAngle+=360;
@@ -82,9 +82,9 @@ public class TileEntityWindVane extends TileEntity
 	    			
 	    			smoothAngleRotationalVelAccel *= 0.80F;
 	    			
-	    			//System.out.println("diff: " + diff);
+	    			//cpw.mods.fml.common.FMLLog.info("diff: " + diff);
 	    			
-	    			//System.out.println("smoothAngle: " + smoothAngle + " - smoothAngleRotationalVel: " + smoothAngleRotationalVel + " - smoothAngleRotationalVelAccel: " + smoothAngleRotationalVelAccel);
+	    			//cpw.mods.fml.common.FMLLog.info("smoothAngle: " + smoothAngle + " - smoothAngleRotationalVel: " + smoothAngleRotationalVel + " - smoothAngleRotationalVelAccel: " + smoothAngleRotationalVelAccel);
 	    		}
     		}
     	}
@@ -93,7 +93,7 @@ public class TileEntityWindVane extends TileEntity
     @Override
     public void validate() {
     	super.validate();
-    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 3, zCoord + 1);
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 2, yCoord + 3, zCoord + 2);
     }
 
     @Override

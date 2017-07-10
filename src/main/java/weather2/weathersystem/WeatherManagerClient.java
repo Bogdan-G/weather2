@@ -66,8 +66,10 @@ public class WeatherManagerClient extends WeatherManagerBase {
 				Weather.dbg("error removing storm, cant find by ID: " + ID);
 			}
 		} else if (command.equals("syncStormUpdate")) {
+			boolean print = false;
+			StringBuilder sb = new StringBuilder();
 			//Weather.dbg("updating client side storm");
-			//System.out.println("syncStormUpdate: Received payload of " + parNBT.getInteger("stormCount") + " storm data");
+			//cpw.mods.fml.common.FMLLog.info("syncStormUpdate: Received payload of " + parNBT.getInteger("stormCount") + " storm data");
 			for (int i = 0; i < parNBT.getInteger("stormCount"); i++) {
 				NBTTagCompound stormNBT = parNBT.getCompoundTag("storm" + i);
 				long ID = stormNBT.getLong("ID");
@@ -76,8 +78,13 @@ public class WeatherManagerClient extends WeatherManagerBase {
 				if (so != null) {
 					so.nbtSyncFromServer(stormNBT);
 				} else {
-					Weather.dbg("error syncing storm, cant find by ID: " + ID);
+					//less new lines spam
+					if (!print) print=true;
+					//Weather.dbg("error syncing storm, cant find by ID: " + ID);
+					sb.append(ID).append(", ");
 				}
+			}
+			if (print) Weather.dbg("error syncing storm(s), cant find by ID(s): " + String.valueOf(sb));
 		} else if (command.equals("syncVolcanoNew")) {
 			Weather.dbg("creating client side volcano");
 			NBTTagCompound stormNBT = parNBT.getCompoundTag("data");

@@ -82,7 +82,7 @@ public class TileEntityAnemometer extends TileEntity
     @Override
     public void validate() {
     	super.validate();
-    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 3, zCoord + 1);
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 2, yCoord + 3, zCoord + 2);
     }
     
     @Override

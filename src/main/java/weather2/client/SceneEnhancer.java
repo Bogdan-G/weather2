@@ -82,6 +82,7 @@ public class SceneEnhancer implements Runnable {
     
     public static float curOvercastStr = 0F;
     public static float curOvercastStrTarget = 0F;
+    private static Random rand = new org.bogdang.modifications.random.XSTR();
 	
 	public SceneEnhancer() {
 		pm = new ParticleBehaviors(null);
@@ -94,7 +95,7 @@ public class SceneEnhancer implements Runnable {
 				tickClientThreaded();
 				Thread.sleep(ConfigMisc.Thread_Particle_Process_Delay);
 			} catch (Throwable throwable) {
-                throwablcpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);
+                cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, throwable, "Weather2 stacktrace: %s", throwable);
             }
 		}
 	}
@@ -143,7 +144,7 @@ public class SceneEnhancer implements Runnable {
 	            int curY = (int)player.posY;
 	            int curZ = (int)player.posZ;
 	            
-	            Random rand = new org.bogdang.modifications.random.XSTR();
+	            //Random rand = new org.bogdang.modifications.random.XSTR();
 	            
 	            //trim out distant sound locations, also update last time played
 	            for (int i = 0; i < soundLocations.size(); i++) {
@@ -153,7 +154,7 @@ public class SceneEnhancer implements Runnable {
 	            	if (Math.sqrt(cCor.getDistanceSquared(curX, curY, curZ)) > size) {
 	            		soundLocations.remove(i--);
 	            		soundTimeLocations.remove(cCor);
-	            		//System.out.println("trim out soundlocation");
+	            		//cpw.mods.fml.common.FMLLog.info("trim out soundlocation");
 	            	} else {
 	
 	                    Block block = getBlock(worldRef, cCor.posX, cCor.posY, cCor.posZ);//Block.blocksList[id];
@@ -177,7 +178,7 @@ public class SceneEnhancer implements Runnable {
 									soundTimeLocations.put(cCor, System.currentTimeMillis() + 2500 + rand.nextInt(50));
 									//mc.getSoundHandler().playSound(Weather.modID + ":waterfall", cCor.posX, cCor.posY, cCor.posZ, (float)ConfigMisc.volWaterfallScale, 0.75F + (rand.nextFloat() * 0.05F));
 									mc.theWorld.playSound(cCor.posX, cCor.posY, cCor.posZ, Weather.modID + ":env.waterfall", (float)ConfigMisc.volWaterfallScale, 0.75F + (rand.nextFloat() * 0.05F), false);
-									//System.out.println("play waterfall at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ);
+									//cpw.mods.fml.common.FMLLog.info("play waterfall at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ);
 								} else if (cCor.block == SOUNDMARKER_LEAVES) {
 									
 										
@@ -186,7 +187,7 @@ public class SceneEnhancer implements Runnable {
 										soundTimeLocations.put(cCor, System.currentTimeMillis() + 12000 + rand.nextInt(50));
 										//mc.getSoundHandler().playSound(Weather.modID + ":wind_calmfade", cCor.posX, cCor.posY, cCor.posZ, (float)(windSpeed * 4F * ConfigMisc.volWindTreesScale), 0.70F + (rand.nextFloat() * 0.1F));
 										mc.theWorld.playSound(cCor.posX, cCor.posY, cCor.posZ, Weather.modID + ":env.wind_calmfade", (float)(windSpeed * 4F * ConfigMisc.volWindTreesScale), 0.70F + (rand.nextFloat() * 0.1F), false);
-										//System.out.println("play leaves sound at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ + " - windSpeed: " + windSpeed);
+										//cpw.mods.fml.common.FMLLog.info("play leaves sound at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ + " - windSpeed: " + windSpeed);
 									} else {
 										windSpeed = WindReader.getWindSpeed(mc.theWorld, Vec3.createVectorHelper(cCor.posX, cCor.posY, cCor.posZ));
 										//if (windSpeed > 0.3F) {
@@ -195,7 +196,7 @@ public class SceneEnhancer implements Runnable {
 											//mc.getSoundHandler().playSound(Weather.modID + ":wind_calmfade", cCor.posX, cCor.posY, cCor.posZ, (float)(windSpeed * 2F * ConfigMisc.volWindTreesScale), 0.70F + (rand.nextFloat() * 0.1F));
 											mc.theWorld.playSound(cCor.posX, cCor.posY, cCor.posZ, Weather.modID + ":env.wind_calmfade", (float)(windSpeed * 2F * ConfigMisc.volWindTreesScale), 0.70F + (rand.nextFloat() * 0.1F), false);
 										}
-											//System.out.println("play leaves sound at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ + " - windSpeed: " + windSpeed);
+											//cpw.mods.fml.common.FMLLog.info("play leaves sound at: " + cCor.posX + " - " + cCor.posY + " - " + cCor.posZ + " - windSpeed: " + windSpeed);
 										//}
 									}
 										
@@ -203,14 +204,14 @@ public class SceneEnhancer implements Runnable {
 								}
 								
 							} else {
-								//System.out.println("still waiting, diff: " + (lastPlayTime - System.currentTimeMillis()));
+								//cpw.mods.fml.common.FMLLog.info("still waiting, diff: " + (lastPlayTime - System.currentTimeMillis()));
 							}
 	                    }
 	            	}
 	            }
 			}
 		} catch (Exception ex) {
-    		System.out.println("Weather2: Error handling sound play queue: ");
+    		cpw.mods.fml.common.FMLLog.warning("Weather2: Error handling sound play queue: ");
     		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
     }
@@ -224,7 +225,7 @@ public class SceneEnhancer implements Runnable {
     	World worldRef = mc.theWorld;
     	EntityPlayer player = mc.thePlayer;
     	
-    	Random rand = new org.bogdang.modifications.random.XSTR();
+    	//Random rand = new org.bogdang.modifications.random.XSTR();
     	
     	if (lastTickAmbientThreaded < System.currentTimeMillis()) {
     		lastTickAmbientThreaded = System.currentTimeMillis() + 500;
@@ -284,7 +285,7 @@ public class SceneEnhancer implements Runnable {
                         				
                         				if (!proxFail) {
                         					soundLocations.add(new ChunkCoordinatesBlock(xx, bottomY, zz, SOUNDMARKER_WATER, 0));
-                        					//System.out.println("add waterfall");
+                        					//cpw.mods.fml.common.FMLLog.info("add waterfall");
                         				}
                         			}
                             	}
@@ -299,7 +300,7 @@ public class SceneEnhancer implements Runnable {
                 				
                 				if (!proxFail) {
                 					soundLocations.add(new ChunkCoordinatesBlock(xx, yy, zz, SOUNDMARKER_LEAVES, 0));
-                					//System.out.println("add leaves sound location");
+                					//cpw.mods.fml.common.FMLLog.info("add leaves sound location");
                 				}
                             }
                         }
@@ -349,7 +350,7 @@ public class SceneEnhancer implements Runnable {
 			
 			BiomeGenBase biomegenbase = entP.worldObj.getBiomeGenForCoords(MathHelper.floor_double(entP.posX), MathHelper.floor_double(entP.posZ));
 
-            if (/*true*/biomegenbase != null/* || biomegenbase.canSpawnLightningBolt() || biomegenbase.getEnableSnow()*/)
+            if (/*true*/biomegenbase != null/* || biomegenbase.canSpawnLightningBolt() || biomegenbase.getEnableSnow()*/ && entP.posY+6<ConfigMisc.Cloud_Layer0_Height)
             {
 			
 				float temperature = biomegenbase.getFloatTemperature(MathHelper.floor_double(entP.posX), MathHelper.floor_double(entP.posY), MathHelper.floor_double(entP.posZ));
@@ -361,17 +362,17 @@ public class SceneEnhancer implements Runnable {
 	            	//now absolute it for ez math
 	            	curPrecipVal = Math.min(maxPrecip, Math.abs(curPrecipVal));
 	            	
-	            	//Weather.dbg("precip: " + curPrecipVal);
+	            	//Weather.dbg("rain precip: " + curPrecipVal);
 	            	
 	            	//rain
 					if (curPrecipVal > 0 && entP.worldObj.canLightningStrikeAt(MathHelper.floor_double(entP.posX), MathHelper.floor_double(entP.boundingBox.minY), MathHelper.floor_double(entP.posZ))) {
 						
-						//Weather.dbg("rate: " + curPrecipVal * 20F * ConfigMisc.Particle_Precipitation_effect_rate);
+						//Weather.dbg("rain rate: " + curPrecipVal * 300F * ConfigMisc.Particle_Precipitation_effect_rate);
 						
-						for (int i = 0; i < curPrecipVal * 20F * ConfigMisc.Particle_Precipitation_effect_rate; i++) {
-							int spawnAreaSize = 15;
-							EntityFallingRainFX ent = new EntityFallingRainFX(entP.worldObj, (double)entP.posX + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), (double)entP.posY + 15, (double)entP.posZ + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), 0D, -5D - (entP.worldObj.rand.nextInt(5) * -1D), 0D, 1.5D, 3);
-							ent.severityOfRainRate = (int)(curPrecipVal * 5F);
+						for (int i = 0; i < curPrecipVal * 300F * ConfigMisc.Particle_Precipitation_effect_rate; i++) {
+							int spawnAreaSize = 70;//15
+							EntityFallingRainFX ent = new EntityFallingRainFX(entP.worldObj, (double)entP.posX + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), (double)entP.posY + 10, (double)entP.posZ + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), 0D, -5D - (entP.worldObj.rand.nextInt(5) * -1D), 0D, 1.5D, 3);
+							ent.severityOfRainRate = (int)(curPrecipVal * 8F);//(int)(curPrecipVal * 5F);
 					        ent.renderDistanceWeight = 1.0D;
 					        ent.setSize(1.2F, 1.2F);
 					        ent.rotationYaw = ent.worldObj.rand.nextInt(360) - 180F;
@@ -385,16 +386,18 @@ public class SceneEnhancer implements Runnable {
 	            	//now absolute it for ez math
 	            	curPrecipVal = Math.min(maxPrecip, Math.abs(curPrecipVal));
 	            	
+	            	//Weather.dbg("snow precip: " + curPrecipVal);
+	            	
 	            	//snow
 	            	if (curPrecipVal > 0) {
 	            		
-	            		//Weather.dbg("rate: " + curPrecipVal * 5F * ConfigMisc.Particle_Precipitation_effect_rate);
+	            		//Weather.dbg("snow rate: " + curPrecipVal * 75F * ConfigMisc.Particle_Precipitation_effect_rate);
 	            		
-						for (int i = 0; i < curPrecipVal * 5F * ConfigMisc.Particle_Precipitation_effect_rate; i++) {
-							int spawnAreaSize = 50;
+						for (int i = 0; i < curPrecipVal * 75F * ConfigMisc.Particle_Precipitation_effect_rate; i++) {
+							int spawnAreaSize = 70;//50
 							int spawnAbove = 10;
 							EntityFallingSnowFX ent = new EntityFallingSnowFX(entP.worldObj, (double)entP.posX + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), (double)entP.posY + spawnAbove, (double)entP.posZ + entP.worldObj.rand.nextInt(spawnAreaSize) - (spawnAreaSize / 2), 0D, -5D - (entP.worldObj.rand.nextInt(5) * -1D), 0D, 5.5D, 6);
-							ent.severityOfRainRate = (int)(curPrecipVal * 5F);
+							ent.severityOfRainRate = (int)(curPrecipVal * 8F);//(int)(curPrecipVal * 5F);
 					        ent.renderDistanceWeight = 1.0D;
 					        ent.setSize(1.2F, 1.2F);
 					        ent.rotationYaw = ent.worldObj.rand.nextInt(360) - 180F;
@@ -433,8 +436,8 @@ public class SceneEnhancer implements Runnable {
 			//storm = ClientTickHandler.weatherManager.getClosestStorm(plPos, maxStormDist, StormObject.STATE_FORMING, true);
 			
 			/*if (storm != null) {
-				System.out.println("storm found? " + storm);
-				System.out.println("storm water: " + storm.levelWater);
+				cpw.mods.fml.common.FMLLog.info("storm found? " + storm);
+				cpw.mods.fml.common.FMLLog.info("storm water: " + storm.levelWater);
 			}*/
 		//}
 		
@@ -458,7 +461,7 @@ public class SceneEnhancer implements Runnable {
 	    	}
 	    	
 	    	stormDist = storm.pos.distanceTo(plPos);
-	    	//System.out.println("storm dist: " + stormDist);
+	    	//cpw.mods.fml.common.FMLLog.info("storm dist: " + stormDist);
 	    	if (sizeToUse > stormDist) {
 	    		closeEnough = true;
 	    	}
@@ -480,7 +483,7 @@ public class SceneEnhancer implements Runnable {
 		    	stormIntensity = 0;
 		    }
 		    
-		    //System.out.println("intensity: " + stormIntensity);
+		    //cpw.mods.fml.common.FMLLog.info("intensity: " + stormIntensity);
 	    	mc.theWorld.getWorldInfo().setRaining(true);
 	    	mc.theWorld.getWorldInfo().setThundering(true);
 	    	if (forOvercast) {
@@ -581,7 +584,7 @@ public class SceneEnhancer implements Runnable {
 	public synchronized void tryParticleSpawning()
     {
     	/*if (spawnQueue.size() > 0) {
-    		//System.out.println("spawnQueue.size(): " + spawnQueue.size());
+    		//cpw.mods.fml.common.FMLLog.info("spawnQueue.size(): " + spawnQueue.size());
     	}*/
     	
     	try {
@@ -611,7 +614,7 @@ public class SceneEnhancer implements Runnable {
 	            }
 	        }
     	} catch (Exception ex) {
-    		System.out.println("Weather2: Error handling particle spawn queue: ");
+    		cpw.mods.fml.common.FMLLog.warning("Weather2: Error handling particle spawn queue: ");
     		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
 
@@ -645,7 +648,7 @@ public class SceneEnhancer implements Runnable {
 
         threadLastWorldTickTime = worldRef.getTotalWorldTime();
         
-        Random rand = new org.bogdang.modifications.random.XSTR();
+        //Random rand = new org.bogdang.modifications.random.XSTR();
         
         //mining a tree causes leaves to fall
         int size = 40;
@@ -716,7 +719,7 @@ public class SceneEnhancer implements Runnable {
         //TEMP!!!
         //uh = 10;
         
-        //System.out.println("lastTickFoundBlocks: " + lastTickFoundBlocks + " - rand size: " + uh + " - " + BlockCountRate);
+        //cpw.mods.fml.common.FMLLog.info("lastTickFoundBlocks: " + lastTickFoundBlocks + " - rand size: " + uh + " - " + BlockCountRate);
         
         lastTickFoundBlocks = 0;
         
@@ -725,7 +728,7 @@ public class SceneEnhancer implements Runnable {
         //debug = true;
         //if (true) return;
         
-        //if (debug) System.out.println("windStr: " + windStr + " chance: " + uh);
+        //if (debug) cpw.mods.fml.common.FMLLog.info("windStr: " + windStr + " chance: " + uh);
         //Semi intensive area scanning code
         for (int xx = curX - hsize; xx < curX + hsize; xx++)
         {
@@ -777,12 +780,12 @@ public class SceneEnhancer implements Runnable {
 	                                        spawnQueue.add(var31);
 	                                        //mc.effectRenderer.addEffect(var31);
 	                                        
-	                                        //System.out.println("leaf spawn!");
+	                                        //cpw.mods.fml.common.FMLLog.info("leaf spawn!");
 	                                    }*/
 	                                }
                                 }
                             }
-                            else if (ConfigMisc.Wind_Particle_waterfall && player.getDistance(xx,  yy, zz) < 16 && (block != null && block.getMaterial() == Material.water)) {
+                            else if (ConfigMisc.Wind_Particle_waterfall && player.getDistance(xx,  yy, zz) < 50 && (block != null && block.getMaterial() == Material.water)) {
                             	
                             	int meta = getBlockMetadata(worldRef, xx, yy, zz);
                             	if ((meta & 8) != 0) {
@@ -799,7 +802,7 @@ public class SceneEnhancer implements Runnable {
                             			//chance /= 3;
                             			
                             		//}
-                            		//System.out.println("woot! " + chance);
+                            		//cpw.mods.fml.common.FMLLog.info("woot! " + chance);
                                 	if ((((block2 == null || block2.getMaterial() != Material.water) || (meta2 & 8) == 0) && (block3 != null && block3.getMaterial() == Material.water)) || worldRef.rand.nextInt(chance) == 0) {
                             		
 	                            		float range = 0.5F;
@@ -830,7 +833,7 @@ public class SceneEnhancer implements Runnable {
     	                            						2D, 3);
     	                            				//waterP.motionX = -1.5F;
     	                            				waterP.motionY = 4.5F;
-    	                            				//System.out.println("woot! " + chance);
+    	                            				//cpw.mods.fml.common.FMLLog.info("woot! " + chance);
     	                            				spawnQueueNormal.add(waterP);
                             					}
 	                            				
@@ -858,7 +861,7 @@ public class SceneEnhancer implements Runnable {
                             	//
                             	if (worldRef.rand.nextInt(Math.max(1, (spawnRate / 100))) == 0) {
                             		double speed = 0.15D;
-                            		//System.out.println("xx:" + xx);
+                            		//cpw.mods.fml.common.FMLLog.info("xx:" + xx);
                                 	EntityRotFX entityfx = pm.spawnNewParticleIconFX(worldRef, ParticleRegistry.smoke, (double)xx + rand.nextFloat(), yy + 0.2D + rand.nextFloat() * 0.2D, (double)zz + rand.nextFloat(), (rand.nextFloat() - rand.nextFloat()) * speed, 0.03D, (rand.nextFloat() - rand.nextFloat()) * speed);//pm.spawnNewParticleWindFX(worldRef, ParticleRegistry.smoke, xx + rand.nextDouble(), yy + 0.2D + rand.nextDouble() * 0.2D, zz + rand.nextDouble(), (rand.nextDouble() - rand.nextDouble()) * speed, 0.03D, (rand.nextDouble() - rand.nextDouble()) * speed);
                                 	ParticleBehaviors.setParticleRandoms(entityfx, true, true);
                                 	ParticleBehaviors.setParticleFire(entityfx);
@@ -1002,9 +1005,9 @@ public class SceneEnhancer implements Runnable {
 
         //weatherMan.wind.strength = 0.2F;
 
-        //System.out.println("stuff: " + side);
+        //cpw.mods.fml.common.FMLLog.info("stuff: " + side);
         
-        Random rand = new org.bogdang.modifications.random.XSTR();
+        //Random rand = new org.bogdang.modifications.random.XSTR();
         
         int handleCount = 0;
         
@@ -1084,7 +1087,7 @@ public class SceneEnhancer implements Runnable {
             }
         }
         
-        //System.out.println("particles moved: " + handleCount);
+        //cpw.mods.fml.common.FMLLog.info("particles moved: " + handleCount);
 
         WindManager windMan = ClientTickHandler.weatherManager.windMan;
         
@@ -1258,11 +1261,12 @@ public class SceneEnhancer implements Runnable {
         }
         
         /*if (ent instanceof EntityKoaManly) {
-        	System.out.println("wind move speed: " + speed + " | " + ent.worldObj.isRemote);
+        	cpw.mods.fml.common.FMLLog.info("wind move speed: " + speed + " | " + ent.worldObj.isRemote);
         }*/
 
-        ent.motionX += speed * (double)(-MathHelper.sin(windAngle / 180.0F * (float)Math.PI) * MathHelper.cos(0F/*weatherMan.wind.yDirection*/ / 180.0F * (float)Math.PI));
-        ent.motionZ += speed * (double)(MathHelper.cos(windAngle / 180.0F * (float)Math.PI) * MathHelper.cos(0F/*weatherMan.wind.yDirection*/ / 180.0F * (float)Math.PI));
+        //MathHelper.cos(0) == 1
+        ent.motionX += speed * (double)(-Math.sin(windAngle / 180.0F * (float)Math.PI)/* * MathHelper.cos(0FweatherMan.wind.yDirection / 180.0F * (float)Math.PI)*/);
+        ent.motionZ += speed * (double)(Math.cos(windAngle / 180.0F * (float)Math.PI)/* * MathHelper.cos(0FweatherMan.wind.yDirection / 180.0F * (float)Math.PI)*/);
         //commented out for weather2, yStrength was 0
         //ent.motionY += weatherMan.wind.yStrength * 0.1D * (double)(-MathHelper.sin((weatherMan.wind.yDirection) / 180.0F * (float)Math.PI));
     }

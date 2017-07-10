@@ -38,7 +38,7 @@ public class EventHandlerPacket {
 			
 			String packetCommand = nbt.getString("packetCommand");
 			
-			//System.out.println("Weather2 packet command from server: " + packetCommand);
+			//cpw.mods.fml.common.FMLLog.info("Weather2 packet command from server: " + packetCommand);
 			
 			if (packetCommand.equals("WeatherData")) {
 				ClientTickHandler.checkClientWeather();

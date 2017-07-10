@@ -28,13 +28,13 @@ public class WeatherUtilParticle {
     public static Random rand = new org.bogdang.modifications.random.XSTR();
     
     public static Vec3[] rainPositions;
-    public static int maxRainDrops = 80;
+    public static int maxRainDrops = 2000;//80
     //public static int rainDrops = 20;
     
     static {
     	rainPositions = new Vec3[maxRainDrops];
         
-        float range = 20F;
+        float range = 60F;//20F
         
         for (int i = 0; i < maxRainDrops; i++) {
         	rainPositions[i] = Vec3.createVectorHelper((rand.nextFloat() * range) - (range/2), (rand.nextFloat() * range/16) - (range/32), (rand.nextFloat() * range) - (range/2));
@@ -71,7 +71,7 @@ public class WeatherUtilParticle {
         }
         catch (Exception ex)
         {
-        	//System.out.println("temp message: obf reflection fail!");
+        	//cpw.mods.fml.common.FMLLog.info("temp message: obf reflection fail!");
         	//cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
             try
             {
@@ -106,12 +106,12 @@ public class WeatherUtilParticle {
             return 1.4F + ((float)entity1.getAge() / 200);
         }*/
 
-        //if (entity1 instanceof EntityFX)
-        //{
+        if (entity1 instanceof EntityFX)
+        {
             return 5.0F + ((float)entity1.getAge() / 200);
-        //}
+        }
 
-        //return -1;
+        return -1;
     }
     
     /*@SideOnly(Side.CLIENT)

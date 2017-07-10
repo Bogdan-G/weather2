@@ -101,8 +101,8 @@ public class RenderLightningBolt extends Render
 	
 	                    for (int k1 = 0; k1 < 5; ++k1)
 	                    {
-	                        float d11 = par2 + 0.5F - d9;
-	                        float d12 = par6 + 0.5F - d9;
+	                        float d11 = (float)par2 + 0.5F - d9;
+	                        float d12 = (float)par6 + 0.5F - d9;
 	
 	                        if (k1 == 1 || k1 == 2)
 	                        {
@@ -114,8 +114,8 @@ public class RenderLightningBolt extends Render
 	                            d12 += d9 * 2.0F;
 	                        }
 	
-	                        float d13 = par2 + 0.5F - d10;
-	                        float d14 = par6 + 0.5F - d10;
+	                        float d13 = (float)par2 + 0.5F - d10;
+	                        float d14 = (float)par6 + 0.5F - d10;
 	
 	                        if (k1 == 1 || k1 == 2)
 	                        {

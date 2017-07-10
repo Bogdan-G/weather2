@@ -183,7 +183,7 @@ public class WeatherUtilSound {
 	                    sndSystem.newStreamingSource(true, var1, getURLForSoundResource(res), snd, false, var2, var3, var4, ISound.AttenuationType.NONE.getTypeInt(), 1F);
 	                    sndSystem.setVolume(snd, var5 * FMLClientHandler.instance().getClient().gameSettings.getSoundLevel(SoundCategory.WEATHER));
 	                    sndSystem.play(snd);
-	                    System.out.println("testing play sound: " + var1);
+	                    cpw.mods.fml.common.FMLLog.info("testing play sound: " + var1);
 	                }
 	            }
 	        }

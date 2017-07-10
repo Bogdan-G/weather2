@@ -156,9 +156,10 @@ public class WeatherUtilEntity {
     	
     	WindManager windMan = ClientTickHandler.weatherManager.windMan;
     	
+        //MathHelper.cos(0F) == 1
         double speed = 10.0D;
-        int startX = (int)(ent.posX - speed * (double)(-MathHelper.sin(windMan.getWindAngleForPriority() / 180.0F * (float)Math.PI) * MathHelper.cos(0F/*weatherMan.wind.yDirection*/ / 180.0F * (float)Math.PI)));
-        int startZ = (int)(ent.posZ - speed * (double)(MathHelper.cos(windMan.getWindAngleForPriority() / 180.0F * (float)Math.PI) * MathHelper.cos(0F/*weatherMan.wind.yDirection*/ / 180.0F * (float)Math.PI)));
+        int startX = (int)(ent.posX - speed * (-Math.sin(windMan.getWindAngleForPriority() / 180.0F * (float)Math.PI)/* * MathHelper.cos(0FweatherMan.wind.yDirection / 180.0F * (float)Math.PI)*/));
+        int startZ = (int)(ent.posZ - speed * (Math.cos(windMan.getWindAngleForPriority() / 180.0F * (float)Math.PI)/* * MathHelper.cos(0FweatherMan.wind.yDirection / 180.0F * (float)Math.PI)*/));
 
         if (ent instanceof EntityPlayer)
         {

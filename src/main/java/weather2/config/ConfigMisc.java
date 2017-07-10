@@ -54,6 +54,8 @@ public class ConfigMisc implements IConfigCategory {
 	public static boolean Storm_Tornado_grabBlocks = true;
 	@ConfigComment("Grab blocks based on how well a diamond axe can mine the block, so mostly wooden blocks")
 	public static boolean Storm_Tornado_GrabCond_StrengthGrabbing = true;
+	@ConfigComment("Grab blocks without Bedrock and blocks with hardness > 100 and blocks with resistance > 2000")
+	public static boolean Storm_Tornado_GrabCond_Grabbing2 = false;
 	@ConfigComment("Use a list of blocks instead of grabbing based on calculated strength of block")
 	public static boolean Storm_Tornado_GrabCond_List = false;
 	public static boolean Storm_Tornado_GrabCond_List_PartialMatches = false;

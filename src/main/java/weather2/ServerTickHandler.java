@@ -85,7 +85,7 @@ public class ServerTickHandler
 	    	listMsgs = FMLInterModComms.fetchRuntimeMessages(Weather.modID);
 	    	for (int i = 0; i < listMsgs.size(); i++) {
 	    		
-	    		//System.out.println("Weather2 side: " + listMsgs.get(i).key + " - modID: " + listMsgs.get(i).getSender() + " - source: " + listMsgs.get(i).toString() + " - " + listMsgs.get(i).getNBTValue());
+	    		//cpw.mods.fml.common.FMLLog.info("Weather2 side: " + listMsgs.get(i).key + " - modID: " + listMsgs.get(i).getSender() + " - source: " + listMsgs.get(i).toString() + " - " + listMsgs.get(i).getNBTValue());
 	    		
 	    		if (listMsgs.get(i).key.equals("weather.raining")) {
 

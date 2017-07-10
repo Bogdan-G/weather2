@@ -35,6 +35,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 	private int tickerSyncVolcanos = 0;
 	private int tickerSyncWindAndIMC = 0;
 	private int tickerSyncStormSpawnOrRemoveChecks = 0;
+	private static Random rand = new org.bogdang.modifications.random.XSTR();
 
 
 	public WeatherManagerServer(int parDim) {
@@ -90,7 +91,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 			
 			//sync storms
 			
-			//System.out.println("getStormObjects().size(): " + getStormObjects().size());
+			//cpw.mods.fml.common.FMLLog.info("getStormObjects().size(): " + getStormObjects().size());
 			
 			boolean shouldUpdateHighWind = false;
 			boolean shouldUpdateLowWind = false;
@@ -149,7 +150,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 					}
 				}
 
-				Random rand = new org.bogdang.modifications.random.XSTR();
+				//Random rand = new org.bogdang.modifications.random.XSTR();
 				
 				//cloud formation spawning - REFINE ME!
 				for (int i = 0; i < world.playerEntities.size(); i++) {
@@ -176,7 +177,7 @@ public class WeatherManagerServer extends WeatherManagerBase {
 	
 	public void trySpawnNearPlayerForLayer(EntityPlayer entP, int layer) {
 		
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		int tryCountMax = 10;
 		int tryCountCur = 0;
@@ -191,8 +192,8 @@ public class WeatherManagerServer extends WeatherManagerBase {
 		//use 256 or the cutoff val if its configured small
 		float windOffsetDist = Math.min(256, ConfigMisc.Misc_simBoxRadiusCutoff / 4 * 3);
 		double angle = windMan.getWindAngleForClouds();
-		double vecX = -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * windOffsetDist;
-		double vecZ = org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * windOffsetDist;
+		double vecX = -Math.sin(Math.toRadians(angle)) * windOffsetDist;
+		double vecZ = Math.cos(Math.toRadians(angle)) * windOffsetDist;
 		
 		while (tryCountCur++ == 0 || (tryCountCur < tryCountMax && (soClose != null || playerClose != null))) {
 			spawnX = (int) (entP.posX - vecX + rand.nextInt(ConfigMisc.Misc_simBoxRadiusSpawn) - rand.nextInt(ConfigMisc.Misc_simBoxRadiusSpawn));

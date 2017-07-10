@@ -17,10 +17,13 @@ public class EntityFallingRainFX extends EntityRotFX implements WindHandler
     public float brightness;
     
     public int severityOfRainRate = 2;
+    private static Minecraft mc = Minecraft.getMinecraft();
     
     public EntityFallingRainFX(World var1, double var2, double var4, double var6, double var8, double var10, double var12, double var14, int colorIndex)
     {
         super(var1, var2, var4, var6, var8, var10, var12);
+        /*this.renderDistanceWeight = 40.0D;
+        this.fallDistance = 40f;*/
         this.motionX = var8 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
         this.motionY = var10 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
         this.motionZ = var12 + (((new org.bogdang.modifications.random.XSTR()).nextFloat() * 2.0F - 1.0F) * 0.05F);
@@ -68,8 +71,8 @@ public class EntityFallingRainFX extends EntityRotFX implements WindHandler
         }
 
         this.particleScale = this.rand.nextFloat() * this.rand.nextFloat() * 6.0F;
-        this.particleMaxAge = (int)(16.0D/* / ((double)this.rand.nextFloat() * 0.8D + 0.2D)*/) + 2;
-        this.particleMaxAge = (int)((float)this.particleMaxAge * var14);
+        this.particleMaxAge = (16/* / ((double)this.rand.nextFloat() * 0.8D + 0.2D)*/) + 2;
+        this.particleMaxAge = (int)(this.particleMaxAge * var14)+500;//small age, particle no fall to ground
         this.particleGravity = 1.0F;
         //this.particleScale = 1F;
         this.setParticleTextureIndex(WeatherUtilParticle.effRainID);
@@ -105,7 +108,7 @@ public class EntityFallingRainFX extends EntityRotFX implements WindHandler
         //float var16 = this.getBrightness(var2) * brightness;
         //var16 = (1.3F + ModLoader.getMinecraftInstance().gameSettings.gammaSetting) - (this.worldObj.calculateSkylightSubtracted(var2) * 0.13F);
         
-        Minecraft mc = Minecraft.getMinecraft();
+        //Minecraft mc = Minecraft.getMinecraft();
         float br = ((0.9F + (mc.gameSettings.gammaSetting * 0.1F)) - (mc.theWorld.calculateSkylightSubtracted(var2) * 0.03F)) * mc.theWorld.getSunBrightness(1F);
         br = 0.35F * Math.max(0.3F, br) * (2F);
         
@@ -201,6 +204,6 @@ public class EntityFallingRainFX extends EntityRotFX implements WindHandler
 	
 	@Override
 	public float maxRenderRange() {
-    	return 40F;
+    	return 60F;//40F
     }
 }

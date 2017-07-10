@@ -88,6 +88,7 @@ public class VolcanoObject {
 	//public static int STATE_ERUPTING = 1;
 	
 	public int growthStage = 0;
+	private static Random rand = new org.bogdang.modifications.random.XSTR();
 	
 	public VolcanoObject(WeatherManagerBase parManager) {
 		manager = parManager;
@@ -262,7 +263,7 @@ public class VolcanoObject {
 				
 				state++;
 				
-				System.out.println("initial volcano created");
+				cpw.mods.fml.common.FMLLog.info("initial volcano created");
 				
 			} else if (state == 1) {
 				if (this.manager.getWorld().getTotalWorldTime() % processRateDelay == 0) {
@@ -281,7 +282,7 @@ public class VolcanoObject {
 							
 							int radiusForLayer = Math.max(0, curRadius - yy - 2);
 							
-							//System.out.println("rad: " + radiusForLayer);
+							//cpw.mods.fml.common.FMLLog.info("rad: " + radiusForLayer);
 							
 							double vecX = radiusForLayer;
 							double vecZ = 0;
@@ -300,7 +301,7 @@ public class VolcanoObject {
 								
 								Block blockID = topBlockID;
 								
-								Random rand = new org.bogdang.modifications.random.XSTR();
+								//Random rand = new org.bogdang.modifications.random.XSTR();
 								
 								//some random chance of placing a block here
 								if (rand.nextInt(4) == 0) {
@@ -326,7 +327,7 @@ public class VolcanoObject {
 						}
 					//}
 
-					System.out.println("cur size: " + size + " - " + curHeight + " - " + curRadius);
+					cpw.mods.fml.common.FMLLog.info("cur size: " + size + " - " + curHeight + " - " + curRadius);
 				}
 			} else if (state == 2) {
 				//build up pressure, somehow, just a timer and increasing particle effects?
@@ -486,8 +487,8 @@ public class VolcanoObject {
 			} else {
 				//ent.posX = pos.xCoord + i*10;
 				/*float radius = 50 + (i/1F);
-				float posX = (float) org.bogdang.modifications.math.MathHelperLite.sin(ent.entityId);
-				float posZ = (float) org.bogdang.modifications.math.MathHelperLite.cos(ent.entityId);
+				float posX = (float) Math.sin(ent.entityId);
+				float posZ = (float) Math.cos(ent.entityId);
 				ent.setPosition(pos.xCoord + posX*radius, ent.posY, pos.zCoord + posZ*radius);*/
 		        
 				double speed = 0.4D + (rand.nextFloat() * 1D * 0.01D);
@@ -497,7 +498,7 @@ public class VolcanoObject {
 				double vecX = ent.posX - pos.xCoord;
 		        double vecZ = ent.posZ - pos.zCoord;
 		        float angle = (float)(Math.atan2(vecZ, vecX) * 180.0D / Math.PI);
-		        //System.out.println("angle: " + angle);
+		        //cpw.mods.fml.common.FMLLog.info("angle: " + angle);
 		        angle += 50;
 		        
 		        angle -= (ent.getEntityId() % 10) * 3D;
@@ -544,8 +545,8 @@ public class VolcanoObject {
 	        	}
 		        
 		        if (curSpeed < 3D) {
-		        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
-			        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
+		        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
+			        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
 		        }*/
 		        
 		        
@@ -560,13 +561,13 @@ public class VolcanoObject {
 			}*/
 		}
 		
-		//System.out.println("size: " + listParticlesCloud.size());
+		//cpw.mods.fml.common.FMLLog.info("size: " + listParticlesCloud.size());
 	}
 	
 	@SideOnly(Side.CLIENT)
     public EntityRotFX spawnSmokeParticle(double x, double y, double z) {
     	double speed = 0D;//hmm 0.0
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
     	EntityRotFX entityfx = particleBehaviors.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, /*(rand.nextFloat() - rand.nextFloat()) * */speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, /*(rand.nextFloat() - rand.nextFloat()) * */speed);
     	particleBehaviors.initParticle(entityfx);
     	particleBehaviors.setParticleRandoms(entityfx, true, true);

@@ -64,11 +64,12 @@ public class WindManager {
 	public int lowWindTimerEnableAmountBase = 20*60*2;
 	public int lowWindTimerEnableAmountRnd = 20*60*10;
 	public int lowWindOddsTo1 = 20*200;
+	private static Random rand = new org.bogdang.modifications.random.XSTR();
 	
 	public WindManager(WeatherManagerBase parManager) {
 		manager = parManager;
 		
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		windAngleGlobal = rand.nextInt(360);
 	}
@@ -143,7 +144,7 @@ public class WindManager {
 	
 	public void tick() {
 		
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		//debug
 		//Weather.dbg("wind angle: " + windAngleGlobal);
@@ -279,8 +280,7 @@ public class WindManager {
         }
 		
 		//event data
-		if (entP != null) {
-	        if (manager.getWorld().getTotalWorldTime() % 10 == 0) {
+		if (entP != null && manager.getWorld().getTotalWorldTime() % 10 == 0) {
 	        	StormObject so = manager.getClosestStorm(Vec3.createVectorHelper(entP.posX, StormObject.layers.get(0), entP.posZ), 256, StormObject.STATE_HIGHWIND);
 	        	
 	        	//FIX SO IT DOESNT COUNT RAINSTORMS! - i did?
@@ -301,7 +301,6 @@ public class WindManager {
 		            //Weather.dbg("!!!!!!!!!!!!!!!!!!!storm event near: " + stormDist);
 	        	}
 	        }
-		}
 	}
 	
 	public NBTTagCompound nbtSyncForClient() {

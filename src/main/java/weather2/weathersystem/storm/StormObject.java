@@ -162,7 +162,7 @@ public class StormObject {
 	public TornadoHelper tornadoHelper = new TornadoHelper(this);
 	
 	public Set<ChunkCoordIntPair> doneChunks = new HashSet<ChunkCoordIntPair>();
-	public int updateLCG = (new org.bogdang.modifications.random.XSTR()).nextInt();
+	public int updateLCG = rand.nextInt();
     
     public float formingStrength = 0; //for transition from 0 (in clouds) to 1 (touch down)
     
@@ -186,6 +186,7 @@ public class StormObject {
     private NBTTagCompound cachedClientNBTState;
 	
     //public static long lastStormFormed = 0;
+    private static Random rand = new org.bogdang.modifications.random.XSTR();
     
 	public StormObject(WeatherManagerBase parManager) {
 		manager = parManager;
@@ -285,13 +286,13 @@ public class StormObject {
 	public void nbtSyncFromServer(NBTTagCompound parNBT) {
 		
 		/*
-		System.out.println("Received payload from server; length=" + parNBT.func_150296_c().size());
+		cpw.mods.fml.common.FMLLog.info("Received payload from server; length=" + parNBT.func_150296_c().size());
 		Iterator iterator = parNBT.func_150296_c().iterator();
 		String keys = "";
 		while (iterator.hasNext()) {
 			keys = keys.concat((String)iterator.next() + "; ");
 		}
-		System.out.println("    " + keys);
+		cpw.mods.fml.common.FMLLog.info("    " + keys);
 		*/
 
 		//CachedNBTTagCompound newData = new CachedNBTTagCompound(cachedClientNBTState);
@@ -566,7 +567,7 @@ public class StormObject {
 			
 			tickMovement();
 			
-			//System.out.println("cloud motion: " + motion + " wind angle: " + angle);
+			//cpw.mods.fml.common.FMLLog.info("cloud motion: " + motion + " wind angle: " + angle);
 			
 			if (layer == 0) {
 				tickWeatherEvents();
@@ -644,8 +645,8 @@ public class StormObject {
 		
 		//Weather.dbg("cur angle: " + angle);
 		
-		double vecX = -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle));
-		double vecZ = org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle));
+		double vecX = -Math.sin(Math.toRadians(angle));
+		double vecZ = Math.cos(Math.toRadians(angle));
 		
 		float cloudSpeedAmp = 0.2F;
 		
@@ -696,7 +697,7 @@ public class StormObject {
 	}
 	
 	public void tickWeatherEvents() {
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		World world = manager.getWorld();
 		
 		//patch for worlds that are crashing due to storms that havent been removed since packet optimization bug 
@@ -733,9 +734,9 @@ public class StormObject {
 					//world.addWeatherEffect(new EntityLightningBolt(world, (double)x, (double)y, (double)z));
 					//}
 					
-					//System.out.println("spawned hail: " );
+					//cpw.mods.fml.common.FMLLog.info("spawned hail: " );
 				} else {
-					//System.out.println("nope");
+					//cpw.mods.fml.common.FMLLog.info("nope");
 				}
 			}
 		}
@@ -1018,7 +1019,7 @@ public class StormObject {
 				}*/
 			}
 
-			//System.out.println("cur size: " + size);
+			//cpw.mods.fml.common.FMLLog.info("cur size: " + size);
 		}
 		
 		float tempAdjustRate = (float)ConfigMisc.Storm_TemperatureAdjustRate;//0.1F;
@@ -1055,7 +1056,7 @@ public class StormObject {
 			
 			boolean performBuildup = false;
 			
-			Random rand = new org.bogdang.modifications.random.XSTR();
+			//Random rand = new org.bogdang.modifications.random.XSTR();
 			
 			if (!isPrecipitating() && rand.nextInt(randomChanceOfWaterBuildFromNothing) == 0) {
 				performBuildup = true;
@@ -1081,7 +1082,7 @@ public class StormObject {
 			}
 			
 			if (performBuildup) {
-				//System.out.println("RAIN BUILD TEMP OFF");
+				//cpw.mods.fml.common.FMLLog.info("RAIN BUILD TEMP OFF");
 				levelWater += levelWaterBuildRate;
 				//Weather.dbg("building rain: " + levelWater);
 			}
@@ -1091,7 +1092,7 @@ public class StormObject {
 				levelWater -= levelWaterSpendRate;
 				
 				//TEMP!!!
-				/*System.out.println("TEMP!!!");
+				/*cpw.mods.fml.common.FMLLog.info("TEMP!!!");
 				levelWater = 0;*/
 				
 				if (levelWater < 0) levelWater = 0;
@@ -1409,7 +1410,7 @@ public class StormObject {
 		}
 		
 		if (entP != null) {
-			Random rand = new org.bogdang.modifications.random.XSTR();
+			//Random rand = new org.bogdang.modifications.random.XSTR();
 			double var11 = entP.posX - pos.xCoord;
             double var15 = entP.posZ - pos.zCoord;
             float yaw = -(float)(Math.atan2(var11, var15) * 180.0D / Math.PI);
@@ -1549,7 +1550,7 @@ public class StormObject {
 		
 		//Weather.dbg("size: " + size + " - delay: " + delay); 
 		
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		
 		Vec3 playerAdjPos = Vec3.createVectorHelper(entP.posX, pos.yCoord, entP.posZ);
 		double maxSpawnDistFromPlayer = 512;
@@ -1736,8 +1737,8 @@ public class StormObject {
 			} else {
 				//ent.posX = pos.xCoord + i*10;
 				/*float radius = 50 + (i/1F);
-				float posX = (float) org.bogdang.modifications.math.MathHelperLite.sin(ent.getEntityId());
-				float posZ = (float) org.bogdang.modifications.math.MathHelperLite.cos(ent.getEntityId());
+				float posX = (float) Math.sin(ent.getEntityId());
+				float posZ = (float) Math.cos(ent.getEntityId());
 				ent.setPosition(pos.xCoord + posX*radius, ent.posY, pos.zCoord + posZ*radius);*/
 		        
 				double curSpeed = Math.sqrt(ent.motionX * ent.motionX + ent.motionY * ent.motionY + ent.motionZ * ent.motionZ);
@@ -1766,7 +1767,7 @@ public class StormObject {
 					double vecX = ent.posX - pos.xCoord;
 			        double vecZ = ent.posZ - pos.zCoord;
 			        float angle = (float)(Math.atan2(vecZ, vecX) * 180.0D / Math.PI);
-			        //System.out.println("angle: " + angle);
+			        //cpw.mods.fml.common.FMLLog.info("angle: " + angle);
 			        
 			        //fix speed causing inner part of formation to have a gap
 			        angle += speed * 50D;
@@ -1778,7 +1779,7 @@ public class StormObject {
 			        angle += rand.nextInt(10) - rand.nextInt(10);
 			        
 			        if (curDist > distt) {
-			        	//System.out.println("curving");
+			        	//cpw.mods.fml.common.FMLLog.info("curving");
 			        	angle += 40;
 			        	//speed = 1D;
 			        }
@@ -1838,8 +1839,8 @@ public class StormObject {
 			        
 			        
 			        if (curSpeed < speed * 20D) {
-			        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
-				        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
+			        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
+				        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
 			        }
 				} else {
 					float cloudMoveAmp = 0.2F * (1 + layer);
@@ -1853,8 +1854,8 @@ public class StormObject {
 			        }
 					
 					if (curSpeed < speed * 1D) {
-			        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
-				        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
+			        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
+				        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
 			        }
 				}
 		        
@@ -1929,13 +1930,13 @@ public class StormObject {
                 //ent.rotationPitch = 0;//-20F - (ent.getEntityId() % 10);
                 
                 if (curSpeed < speed * 20D) {
-		        	ent.motionX += -org.bogdang.modifications.math.MathHelperLite.sin(Math.toRadians(angle)) * speed;
-			        ent.motionZ += org.bogdang.modifications.math.MathHelperLite.cos(Math.toRadians(angle)) * speed;
+		        	ent.motionX += -Math.sin(Math.toRadians(angle)) * speed;
+			        ent.motionZ += Math.cos(Math.toRadians(angle)) * speed;
 		        }
 			}
 		}
 		
-		//System.out.println("size: " + listParticlesCloud.size());
+		//cpw.mods.fml.common.FMLLog.info("size: " + listParticlesCloud.size());
 	}
 	
 	public float getAdjustedSpeed() {
@@ -1975,7 +1976,7 @@ public class StormObject {
 		StormObject entity = this;
 		WeatherEntityConfig conf = getWeatherEntityConfigForStorm();//WeatherTypes.weatherEntTypes.get(curWeatherType);
 		
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
 		
     	/*if (entity instanceof EntTornado) {
     		entT = (EntTornado) entity;
@@ -1990,10 +1991,10 @@ public class StormObject {
         double d2 = entity.pos.zCoord - entity1.posZ;
         
         if (conf.type == conf.TYPE_SPOUT) {
-        	float range = 30F * (float) org.bogdang.modifications.math.MathHelperLite.sin((Math.toRadians(((entity1.worldObj.getTotalWorldTime() * 0.5F) + (ID * 50)) % 360)));
+        	float range = 30F * (float) Math.sin((Math.toRadians(((entity1.worldObj.getTotalWorldTime() * 0.5F) + (ID * 50)) % 360)));
         	float heightPercent = (float) (1F - ((entity1.posY - posGround.yCoord) / (pos.yCoord - posGround.yCoord)));
-        	float posOffsetX = (float) org.bogdang.modifications.math.MathHelperLite.sin((Math.toRadians(heightPercent * 360F)));
-        	float posOffsetZ = (float) -org.bogdang.modifications.math.MathHelperLite.cos((Math.toRadians(heightPercent * 360F)));
+        	float posOffsetX = (float) Math.sin((Math.toRadians(heightPercent * 360F)));
+        	float posOffsetZ = (float) -Math.cos((Math.toRadians(heightPercent * 360F)));
         	//Weather.dbg("posOffset: " + posOffset);
         	//d1 += 50F*heightPercent*posOffset;
         	d1 += range*posOffsetX;
@@ -2139,8 +2140,8 @@ public class StormObject {
         	if (entT.scale != 1F) f1 += 20 - (20 * entT.scale);
         }
         
-        float f3 = (float)org.bogdang.modifications.math.MathHelperLite.cos(-f1 * 0.01745329F - (float)Math.PI);
-        float f4 = (float)org.bogdang.modifications.math.MathHelperLite.sin(-f1 * 0.01745329F - (float)Math.PI);
+        float f3 = (float)Math.cos(-f1 * 0.01745329F - (float)Math.PI);
+        float f4 = (float)Math.sin(-f1 * 0.01745329F - (float)Math.PI);
         float f5 = conf.tornadoPullRate * 1;
         
         if (entT_b) {
@@ -2154,7 +2155,7 @@ public class StormObject {
         
         //if player and not spout
         if (entity1 instanceof EntityPlayer && conf.type != 0) {
-        	//System.out.println("grab: " + f5);
+        	//cpw.mods.fml.common.FMLLog.info("grab: " + f5);
         	if (entity1.onGround) {
         		f5 *= 10.5F;
         	} else {
@@ -2197,7 +2198,7 @@ public class StormObject {
         //prevent double+ pull on entities
         long lastPullTime = entity1.getEntityData().getLong("lastPullTime");
         if (lastPullTime == entity1.worldObj.getTotalWorldTime()) {
-        	//System.out.println("preventing double pull");
+        	//cpw.mods.fml.common.FMLLog.info("preventing double pull");
         	pullY = 0;
         }
         entity1.getEntityData().setLong("lastPullTime", entity1.worldObj.getTotalWorldTime());
@@ -2222,7 +2223,7 @@ public class StormObject {
 	@SideOnly(Side.CLIENT)
     public EntityRotFX spawnFogParticle(double x, double y, double z, int parRenderOrder) {
     	double speed = 0D;
-		Random rand = new org.bogdang.modifications.random.XSTR();
+		//Random rand = new org.bogdang.modifications.random.XSTR();
     	EntityRotFX entityfx = particleBehaviorFog.spawnNewParticleIconFX(Minecraft.getMinecraft().theWorld, ParticleRegistry.cloud256, x, y, z, /*(rand.nextFloat() - rand.nextFloat()) * */speed, 0.0D/*(rand.nextDouble() - rand.nextDouble()) * speed*/, /*(rand.nextFloat() - rand.nextFloat()) * */speed, parRenderOrder);
 		particleBehaviorFog.initParticle(entityfx);
 		

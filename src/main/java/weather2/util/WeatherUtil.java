@@ -96,6 +96,19 @@ public class WeatherUtil {
                 }
             }
             
+            if (ConfigMisc.Storm_Tornado_GrabCond_Grabbing2) {
+                    if (block == null) {
+                    	result = false;
+                    	return result;
+                    } else {
+    	                float hardness = block.getBlockHardness(parWorld, 0, 0, 0);
+    	                float resistance = block.getExplosionResistance(null);
+    	                if (id == Blocks.bedrock || hardness>100F || resistance>2000F) {
+    	                	result = false;
+    	                }
+    	            }
+            }
+
             if (id == CommonProxy.blockWeatherMachine) {
             	result = false;
             }
@@ -193,7 +206,7 @@ public class WeatherUtil {
     public static void doBlockList()
     {
         blockIDToUseMapping.clear();
-        //System.out.println("Blacklist: ");
+        //cpw.mods.fml.common.FMLLog.info("Blacklist: ");
         String[] splEnts = ConfigMisc.Storm_Tornado_GrabList.split(",");
         //int[] blocks = new int[splEnts.length];
 
@@ -211,7 +224,7 @@ public class WeatherUtil {
         StringBuilder dbgSB = new StringBuilder(dbg);
 
         //HashMap hashmap = null;
-        //System.out.println("?!?!" + Block.blocksList.length);
+        //cpw.mods.fml.common.FMLLog.info("?!?!" + Block.blocksList.length);
         blockIDToUseMapping.put(Blocks.air, false);
 
         Set set = Block.blockRegistry.getKeys();
@@ -221,7 +234,7 @@ public class WeatherUtil {
         	
         	Block block = (Block) Block.blockRegistry.getObject(tagName);
         	if (dbgShow) {
-        	//System.out.println("??? " + Block.blockRegistry.getNameForObject(block));
+        	//cpw.mods.fml.common.FMLLog.info("??? " + Block.blockRegistry.getNameForObject(block));
         	cpw.mods.fml.common.FMLLog.fine("??? %s", Block.blockRegistry.getNameForObject(block));
         	}
         	
@@ -245,7 +258,7 @@ public class WeatherUtil {
 	                        foundEnt = true;
 	                        dbgSB.append(Block.blockRegistry.getNameForObject(block)).append(", ");
 	                        //blackList.append(s + " ");
-	                        //System.out.println("adding to list: " + blocks[j]);
+	                        //cpw.mods.fml.common.FMLLog.info("adding to list: " + blocks[j]);
 	                        break;
 	                    }
                 	}

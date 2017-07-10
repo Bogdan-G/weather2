@@ -20,7 +20,7 @@ public class TileEntityWeatherDeflector extends TileEntity
     @Override
     public void validate() {
     	super.validate();
-    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
+    	aabb = AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 2, yCoord + 2, zCoord + 2);
     }
 
     @Override

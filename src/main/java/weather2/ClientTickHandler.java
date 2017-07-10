@@ -126,7 +126,7 @@ public class ClientTickHandler
     		//System.out.println no print in log, go print in log
     		Weather.dbg("Warning, Weather2 weatherManager init failed for some reason, printing stacktrace, report to https://github.com/Corosauce/weather2/issues");
     		cpw.mods.fml.common.FMLLog.warning("Warning, Weather2 weatherManager init failed for some reason, printing stacktrace, report to https://github.com/Corosauce/weather2/issues");
-    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)e, "Weather2 stacktrace: %s", (Throwable)e);
+    		cpw.mods.fml.common.FMLLog.log(org.apache.logging.log4j.Level.WARN, (Throwable)ex, "Weather2 stacktrace: %s", (Throwable)ex);
     	}
     }
     
